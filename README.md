@@ -32,15 +32,6 @@ const scrollbar = ctl.createScrollbar({ element: scrollbarEl })
 this can be customized to your liking
 
 ```css
-#viewport {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
 #scrollbar {
   position: fixed;
   top: 0;
@@ -73,6 +64,44 @@ Good practice to add a clearfix or an overflow property to the container to ensu
 
 ```html
 <div id="scrollbar"></div>
+<div id="content"></div>
+```
+
+### Adding a custom viewport to above example
+
+##### JS
+
+```js
+import Controller from 'scrollpro'
+
+const ctl = new Controller()
+const viewportEl = document.getElementById('viewport')
+const viewport = ctl.createViewport({ element: viewportEl })
+
+const contentEl = document.getElementById('content')
+const content = ctl.createContent({ element: contentEl })
+
+const scrollbarEl = document.getElementById('content')
+const scrollbar = ctl.createScrollbar({ element: scrollbarEl })
+```
+
+##### Css
+
+```css
+#viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+```
+
+##### HTML
+
+```html
+<div id="scrollbar"></div>
 <div id="viewport">
   <div id="content"></div>
 </div>
@@ -90,13 +119,14 @@ Good practice to add a clearfix or an overflow property to the container to ensu
 
 #### Options:
 
-| Option      | Type   | Default | Description                                                                           |
-| ----------- | ------ | ------- | ------------------------------------------------------------------------------------- |
-| keystep     | number | 120     | The amount in px you want to scroll when the up and down keys are pressed             |
-| firefoxMult | number | 25      | The speed multiplier used for firefox browser                                         |
-| touchMult   | number | 2       | The speed multiplier used for touch screens                                           |
-| mouseMult   | number | 1       | The speed multiplier used for the mouse wheel                                         |
-| ease        | number | 0.06    | The ease value of the scroll container. The speed that the container comes to a stop. |
+| Option               | Type    | Default | Description                                                                                         |
+| -------------------- | ------- | ------- | --------------------------------------------------------------------------------------------------- |
+| keystep              | number  | 120     | The amount in px you want to scroll when the up and down keys are pressed                           |
+| firefoxMult          | number  | 25      | The speed multiplier used for firefox browser                                                       |
+| touchMult            | number  | 2       | The speed multiplier used for touch screens                                                         |
+| mouseMult            | number  | 1       | The speed multiplier used for the mouse wheel                                                       |
+| ease                 | number  | 0.1     | The ease value of the scroll container. The speed that the container comes to a stop.               |
+| disableKeyNavigation | boolean | false   | If you want to disable the ability to scroll with the keyboard eg. pageup and pagedown buttons ect. |
 
 <br>
 
@@ -117,10 +147,10 @@ Allows you to set event listeners for the controller events stated above.
 
 #### Args:
 
-| Argument | Required | Type     | Description                                                                                                       |
-| -------- | -------- | -------- | ----------------------------------------------------------------------------------------------------------------- |
-| event    | true     | string   | The desired event type for your function to be fired on                                                           |
-| fn       | true     | function | The desired function to be run on the event. If passed on the update event will be called with the scroll values. |
+| Argument | Required | Type     | Description                                              |
+| -------- | -------- | -------- | -------------------------------------------------------- |
+| event    | true     | string   | The desired event type for your function to be fired on. |
+| fn       | true     | function | The desired function to be run on the event.             |
 
 #### Returns: undefined
 
@@ -132,10 +162,10 @@ Removes the function passed the the `on()` method.
 
 #### Args:
 
-| Argument | Required | Type     | Description                                                                                                       |
-| -------- | -------- | -------- | ----------------------------------------------------------------------------------------------------------------- |
-| event    | true     | string   | The desired event type for your function to be fired on                                                           |
-| fn       | true     | function | The desired function to be run on the event. If passed on the update event will be called with the scroll values. |
+| Argument | Required | Type     | Description                                              |
+| -------- | -------- | -------- | -------------------------------------------------------- |
+| event    | true     | string   | The desired event type for your function to be fired on. |
+| fn       | true     | function | The desired function to be run on the event.             |
 
 #### Returns: undefined
 
@@ -147,9 +177,9 @@ Fires event listeners for the specified event.
 
 #### Args:
 
-| Argument | Required | Type   | Description                                             |
-| -------- | -------- | ------ | ------------------------------------------------------- |
-| event    | true     | string | The desired event type for your function to be fired on |
+| Argument | Required | Type   | Description                                              |
+| -------- | -------- | ------ | -------------------------------------------------------- |
+| event    | true     | string | The desired event type for your function to be fired on. |
 
 #### Returns: undefined
 
@@ -375,7 +405,7 @@ A little extra explaination on how to tween. The Observer allows you to set a tw
 | element | false    | the observer element | HTMLElement | The element that you want to tween. If not specified it will default to the element passed in as the observer                                                                             |
 | css     | true     | undefined            | object      | This is an object of valid javascript css values. The key will be a javascript css key and the value can only be specified as a string. No numbers allowed and it will explain why below. |
 
-To specify a tween you start with a javascript css object notation eg. `marginTop: '20px'`. To set the from and to values that you want to use you would place them comma seperated in curly brackets inside the value string like so: `{ marginTop: '{0, 300}px'}`. So in this example you would tween the css `margin-top` from 0px to 300px while the element is in the viewport. Below we will do a full example of you setting up a tween to translateY 500px.
+To specify a tween you start with javascript css object notation eg. `{ marginTop: '20px' }`. To set the `from` and `to` values place them in curly braces seperated by a comma like so: `{ marginTop: '{0, 300}px'}`. So in this example you would tween the css `margin-top` from 0px to 300px while the element is in the viewport. You will have to account for any vertical movement by adding an offset to the beginning or end of the observation. Below we will do a full example of you setting up a tween to translateY 500px.
 
 ```js
 const element = document.getElementById('tween')
@@ -390,7 +420,11 @@ const tween = ctl.createObserver({
 })
 ```
 
-So there is no limit to what css properties you want to tween or how many values in a css string you want to specify. As long as you place your values inside of curly braces and seperate them with commas you can tween from and to whatever your heart desires. It will use the progress value of observer to set the tween's value. <b>Note: just remember when using things like widths, margins, and things that can affect the page flow you can create performance and page breaking issues. Performance wise it is best to stick to translate and matrix.</b>
+So there is no limit to what css properties you can tween or how many values in a css string you can specify. As long as you place your values inside of curly braces and seperate them with commas you can tween `from` and `to` whatever your heart desires. So in one css string you can specify as many `from` and `to` values as you like. For example if you have a css matrix you can do `matrix(1, 0, 0, 1, {0, 500}, {300, 500})`. This will translate the element from 0 to 500 on the x axis and 300 to 500 on the y axis. It is noteworthy to state that the `from` value set will override any default css values set.
+
+<br>
+
+The tween will use the progress value of observer to set the tween's value. <b>Note: just remember when using things like widths, margins, and things that can affect the page flow you can create performance and page breaking issues. Performance wise it is best to stick to translate and matrix.</b>
 
 <br>
 
