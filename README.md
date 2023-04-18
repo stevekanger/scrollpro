@@ -453,7 +453,7 @@ There is no limit to what css properties you can tween or how many values in a c
 
 <br>
 
-<b>Note: just remember when using things like widths, margins, and things that can affect the page flow you can create performance and page breaking issues. Performance wise it is best to stick to translate and matrix.</b>
+<b>Note: just remember when using things like widths, margins, and things that can affect the page flow you can create performance and page breaking issues. Performance wise it is best to stick to css transform.</b>
 
 <br>
 
