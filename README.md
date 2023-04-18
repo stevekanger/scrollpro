@@ -366,7 +366,7 @@ Allows you to scroll to a specific part of the page.
 
 ## Tweening
 
-A little extra explaination on how to tween. The Observer allow you to set a tween object.
+A little extra explaination on how to tween. The Observer allows you to set a tween object.
 
 #### Options:
 
