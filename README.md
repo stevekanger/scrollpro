@@ -381,6 +381,7 @@ To specify a tween you start with a javascript css object notation eg. `marginTo
 const element = document.getElementById('tween')
 const tween = ctl.createObserver({
   element,
+  offsetEnd: -500, // Replace the 500px movement at the end of the observation
   tween: {
     css: {
       transform: 'translateY({0, 500}px)',
