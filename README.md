@@ -263,7 +263,7 @@ Creates as scrollbar inside of an html element.
 
 ### `createObserver({Options})`
 
-Creates an observer for an html element. This will observer the elements place in the scroll relative to the viewport.
+Creates an observer for an html element. This will observe the elements place in the scroll relative to the viewport.
 
 #### Args:
 
@@ -275,7 +275,7 @@ Creates an observer for an html element. This will observer the elements place i
 
 | Option               | Required | Default                    | Type        | Description                                                                                                                                                                                                                                                                                |
 | -------------------- | -------- | -------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| element              | true     | null                       | HTMLElement | Element to ovserve in the scroll                                                                                                                                                                                                                                                           |
+| element              | true     | null                       | HTMLElement | Element to observe in the scroll                                                                                                                                                                                                                                                           |
 | normalizeInitialView | false    | false                      | boolean     | This normalizes the start and end values of the observer. This is handy for uniform parallax scrolling if your element starts in the initial viewport.                                                                                                                                     |
 | offsetStart          | false    | 0                          | number      | This sets an offset from the start of the observation.                                                                                                                                                                                                                                     |
 | offsetEnd            | false    | 0                          | number      | This sets an offset from the end of the observation.                                                                                                                                                                                                                                       |
