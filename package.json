@@ -1,7 +1,7 @@
 {
   "name": "scrollpro",
   "version": "0.0.1",
-  "description": "Smooth scrolling wrapper for gsap",
+  "description": "Smooth momentum scrolling and parallax library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -14,10 +14,6 @@
     "build": "tsc --project tsconfig.build.json",
     "prepare": "npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/stevekanger/scrollpro.git"
-  },
   "keywords": [
     "tween",
     "scrollpro",
@@ -27,6 +23,7 @@
     "scrolling",
     "parallax"
   ],
+  "repository": "https://github.com/stevekanger/scrollpro.git",
   "author": "Steve Kanger",
   "license": "MIT",
   "bugs": {
