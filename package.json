@@ -8,12 +8,6 @@
     "dist",
     "src"
   ],
-  "scripts": {
-    "test": "jest",
-    "clean": "tsc --build --clean",
-    "build": "tsc --project tsconfig.build.json",
-    "prepare": "npm run build"
-  },
   "keywords": [
     "tween",
     "scrollpro",
@@ -23,16 +17,17 @@
     "scrolling",
     "parallax"
   ],
-  "repository": "https://github.com/stevekanger/scrollpro.git",
+  "scripts": {
+    "test": "jest",
+    "clean": "tsc --build --clean",
+    "build": "tsc --project tsconfig.build.json",
+    "prepare": "npm run build"
+  },
   "author": "Steve Kanger",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/stevekanger/scrollpro/issues"
-  },
+  "repository": "https://github.com/stevekanger/scrollpro.git",
   "homepage": "https://github.com/stevekanger/scrollpro#readme",
-  "publishConfig": {
-    "access": "public"
-  },
+  "license": "MIT",
+  "private": false,
   "devDependencies": {
     "@types/jest": "^29.5.0",
     "jest": "^29.5.0",
