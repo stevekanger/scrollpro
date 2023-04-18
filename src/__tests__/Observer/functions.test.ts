@@ -16,16 +16,13 @@ import { createTestElement } from '../testUtils'
 describe('Observer functions', () => {
   it('applyTween correctly applies the css to an element', () => {
     const element = createTestElement({ type: 'div' })
-    const tween = {
-      element,
-      css: {
-        transform: 'translate({0, 100}px, {0, 200}px)',
-      },
+    const css = {
+      transform: 'translate({0, 100}px, {0, 200}px)',
     }
-    applyTween(tween, 0.5)
+    applyTween(element, css, 0.5)
     expect(element.style.transform).toBe('translate(50px, 100px)')
-    tween.css.transform = 'skew({0, 400})'
-    applyTween(tween, 0.25)
+    css.transform = 'skew({0, 400})'
+    applyTween(element, css, 0.25)
     expect(element.style.transform).toBe('skew(100)')
   })
 

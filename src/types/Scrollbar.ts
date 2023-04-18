@@ -8,6 +8,7 @@ export type ScrollbarArgs = {
 }
 
 export interface IScrollbar {
+  setOptions: (options: Partial<ScrollbarOptions>) => void
   init: () => void
   kill: () => void
   update: () => void

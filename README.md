@@ -29,7 +29,7 @@ const scrollbar = ctl.createScrollbar({ element: scrollbarEl })
 
 ##### Css
 
-this can be customized to your liking
+There is no default css added to your scrollbar you need to style it yourself so you can customize it to your liking.
 
 ```css
 #scrollbar {
@@ -215,6 +215,31 @@ Updates the controller items with the current scroll values.
 
 <br>
 
+### `setOptions({Options})`
+
+Sets controller options. It will combine the already set options with the options you pass in.
+
+#### Args:
+
+| Argument          | Required | Type   | Description                      |
+| ----------------- | -------- | ------ | -------------------------------- |
+| ControllerOptions | true     | Object | Parameters for virtual scrolling |
+
+#### Options:
+
+| Option               | Type    | Default | Description                                                                                         |
+| -------------------- | ------- | ------- | --------------------------------------------------------------------------------------------------- |
+| keystep              | number  | 120     | The amount in px you want to scroll when the up and down keys are pressed                           |
+| firefoxMult          | number  | 25      | The speed multiplier used for firefox browser                                                       |
+| touchMult            | number  | 2       | The speed multiplier used for touch screens                                                         |
+| mouseMult            | number  | 1       | The speed multiplier used for the mouse wheel                                                       |
+| ease                 | number  | 0.1     | The ease value of the scroll container. The speed that the container comes to a stop.               |
+| disableKeyNavigation | boolean | false   | If you want to disable the ability to scroll with the keyboard eg. pageup and pagedown buttons ect. |
+
+#### Returns: undefined
+
+<br>
+
 ### `createViewort({Options})`
 
 Creates the viewport. This initializes the controller and sets the required event listeners for virtualized scrolling.
@@ -288,6 +313,7 @@ Creates as scrollbar inside of an html element.
 `kill()`: Kills the scrollbar removing it from the event list.<br>
 `refresh()`: Recalculates the scrollbar and updates it.<br>
 `update()`: Updates the scrollbar thumb with the current scroll values.<br>
+`setOptions({Options})`: sets the options. Will combine already set options.
 
 <br>
 
@@ -303,17 +329,20 @@ Creates an observer for an html element. This will observe the elements place in
 
 #### Options:
 
-| Option               | Required | Default                    | Type        | Description                                                                                                                                                                                                                                                                                |
-| -------------------- | -------- | -------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| element              | true     | null                       | HTMLElement | Element to observe in the scroll                                                                                                                                                                                                                                                           |
-| normalizeInitialView | false    | false                      | boolean     | This normalizes the start and end values of the observer. This is handy for uniform parallax scrolling if your element starts in the initial viewport.                                                                                                                                     |
-| offsetStart          | false    | 0                          | number      | This sets an offset from the start of the observation.                                                                                                                                                                                                                                     |
-| offsetEnd            | false    | 0                          | number      | This sets an offset from the end of the observation.                                                                                                                                                                                                                                       |
-| start                | false    | undefined                  | number      | If you want to manually set the start of the observation this value will be used instead of calculating it.                                                                                                                                                                                |
-| distance             | false    | undefined                  | number      | If you want to manullly set the distance for your element to be observed for this will be used intead of calculating it.                                                                                                                                                                   |
-| addClasses           | false    | false                      | boolean     | If set to true the controller will set 'aboveViewport', 'belowViewport' and 'inViewport' classes to your element relative to where they are.                                                                                                                                               |
-| callback             | false    | ({progress, inView}) => {} | function    | This is a callback function that will be fired every time the scroll is updated. It will be called with an object that has `{ progress, inView }`. Progress is a 0 to 1 value of the elements progress through the viewport. And inView is whether or not your element is in the viewport. |
-| tween                | false    | undefined                  | object      | <a href="#tweening">See Tweening for further details.</a> This is an object that has an element and css properties that can be applied based on scroll position.                                                                                                                           |
+| Option               | Required | Default          | Type        | Description                                                                                                                                                                                                                                                                                |
+| -------------------- | -------- | ---------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| element              | true     | null             | HTMLElement | Element to observe in the scroll                                                                                                                                                                                                                                                           |
+| normalizeInitialView | false    | false            | boolean     | This normalizes the start and end values of the observer. This is handy for uniform parallax scrolling if your element starts in the initial viewport.                                                                                                                                     |
+| offsetStart          | false    | 0                | number      | This sets an offset from the start of the observation.                                                                                                                                                                                                                                     |
+| offsetEnd            | false    | 0                | number      | This sets an offset from the end of the observation.                                                                                                                                                                                                                                       |
+| start                | false    | undefined        | number      | If you want to manually set the start of the observation this value will be used instead of calculating it.                                                                                                                                                                                |
+| distance             | false    | undefined        | number      | If you want to manullly set the distance for your element to be observed for this will be used intead of calculating it.                                                                                                                                                                   |
+| addClasses           | false    | false            | boolean     | If set to true the controller will set 'aboveViewport', 'belowViewport' and 'inViewport' classes to your element relative to where they are.                                                                                                                                               |
+| callback             | false    | () => {}         | function    | This is a callback function that will be fired every time the scroll is updated. It will be called with an object that has `{ progress, inView }`. Progress is a 0 to 1 value of the elements progress through the viewport. And inView is whether or not your element is in the viewport. |
+| tweenElement         | false    | observer element | HTMLElement | If you passed in tweenCss this is the element that it will be applied to. If you set this to something other than the observer element you can use your observer element as a trigger for tweening a different element.                                                                    |
+| tweenCss             | false    | undefined        | TweenCss    | This is an object of javascript css values that you can set to tween your element based on its position in the viewport.                                                                                                                                                                   |
+
+See <a href="#tweening">Tweening</a> for further details on how to set up a tween/parallax element.
 
 #### Returns: Observer Methods
 
@@ -321,6 +350,7 @@ Creates an observer for an html element. This will observe the elements place in
 `kill()`: Kills the Observer removing it from the event list.<br>
 `refresh()`: Recalculates the Observer and updates it.<br>
 `update()`: Updates the Observer with the current scroll values.<br>
+`setOptions({Options})`: sets the options. Will combine already set options.
 
 <br>
 
@@ -350,6 +380,7 @@ Creates a sticky element just like position sticky in css.
 `kill()`: Kills the Sticky element removing it from the event list.<br>
 `refresh()`: Recalculates the Sticky element and updates it.<br>
 `update()`: Updates the Sticky element with the current scroll values.<br>
+`setOptions({Options})`: sets the options. Will combine already set options.
 
 <br>
 
@@ -396,35 +427,33 @@ Allows you to scroll to a specific part of the page.
 
 ## Tweening
 
-A little extra explaination on how to tween. The Observer allows you to set a tween object.
+A little extra explaination on how to tween. The Observer allows you to set up css for tweening. If you set the `tweenCss` option then you can set up a `from` and `to` value in your css string that will use the observers progress through the viewport as a basis to tween your element.
 
 #### Options:
 
-| Option  | Required | Default              | Type        | Description                                                                                                                                                                               |
-| ------- | -------- | -------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| element | false    | the observer element | HTMLElement | The element that you want to tween. If not specified it will default to the element passed in as the observer                                                                             |
-| css     | true     | undefined            | object      | This is an object of valid javascript css values. The key will be a javascript css key and the value can only be specified as a string. No numbers allowed and it will explain why below. |
+| Option       | Required | Default              | Type        | Description                                                                                                                                                                         |
+| ------------ | -------- | -------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| tweenElement | false    | the observer element | HTMLElement | The element that you want to tween. If not specified it will default to the element passed in as the observer                                                                       |
+| tweenCss     | false    | undefined            | object      | This is an object of valid javascript css values. The key will be a javascript css key and the value can only be specified as a string. No numbers allowed, explaination why below. |
 
-To specify a tween you start with javascript css object notation eg. `{ marginTop: '20px' }`. To set the `from` and `to` values place them in curly braces seperated by a comma like so: `{ marginTop: '{0, 300}px'}`. So in this example you would tween the css `margin-top` from 0px to 300px while the element is in the viewport. You will have to account for any vertical movement by adding an offset to the beginning or end of the observation. Below we will do a full example of you setting up a tween to translateY 500px.
+To specify a tween you start by setting your `tweenCss` value with javascript css object notation eg. `{ marginTop: '20px' }`. To set the `from` and `to` values place them in curly braces seperated by a comma like so: `{ marginTop: '{0, 300}px'}`. So in this example you would tween the css `margin-top` from 0px to 300px while the element is in the viewport. You will have to account for any vertical movement by adding an offset to the beginning or end of the observation. Below we will do a full example of you setting up a tween to translateY 500px.
 
 ```js
 const element = document.getElementById('tween')
 const tween = ctl.createObserver({
   element,
   offsetEnd: -500, // Replace the 500px movement at the end of the observation
-  tween: {
-    css: {
-      transform: 'translateY({0, 500}px)',
-    },
+  tweenCss: {
+    transform: 'translateY({0, 500}px)',
   },
 })
 ```
 
-So there is no limit to what css properties you can tween or how many values in a css string you can specify. As long as you place your values inside of curly braces and seperate them with commas you can tween `from` and `to` whatever your heart desires. So in one css string you can specify as many `from` and `to` values as you like. For example if you have a css matrix you can do `matrix(1, 0, 0, 1, {0, 500}, {300, 500})`. This will translate the element from 0 to 500 on the x axis and 300 to 500 on the y axis. It is noteworthy to state that the `from` value set will override any default css values set.
+There is no limit to what css properties you can tween or how many values in a css string you can specify. As long as you place your values inside of curly braces and seperate them with commas you can tween `from` and `to` whatever your heart desires. So in one css string you can specify as many `from` and `to` values as you like. For example if you have a css matrix you can do `matrix(1, 0, 0, 1, {0, 500}, {300, 500})`. This will translate the element from 0 to 500 on the x axis and 300 to 500 on the y axis. It is noteworthy to state that the `from` value set will override any default css values set.
 
 <br>
 
-The tween will use the progress value of observer to set the tween's value. <b>Note: just remember when using things like widths, margins, and things that can affect the page flow you can create performance and page breaking issues. Performance wise it is best to stick to translate and matrix.</b>
+<b>Note: just remember when using things like widths, margins, and things that can affect the page flow you can create performance and page breaking issues. Performance wise it is best to stick to translate and matrix.</b>
 
 <br>
 

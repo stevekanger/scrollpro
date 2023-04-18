@@ -20,8 +20,7 @@ function replaceString(progress) {
         return string;
     };
 }
-function applyTween(tween, progress) {
-    var element = tween.element, css = tween.css;
+function applyTween(element, css, progress) {
     if (!css)
         return;
     Object.keys(css).forEach(function (key) {

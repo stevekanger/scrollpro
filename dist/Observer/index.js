@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -8,7 +19,7 @@ var getOffsetTop_1 = __importDefault(require("../utils/getOffsetTop"));
 var functions_1 = require("./functions");
 var Observer = /** @class */ (function () {
     function Observer(controller, _a) {
-        var element = _a.element, _b = _a.normalizeInitialView, normalizeInitialView = _b === void 0 ? false : _b, _c = _a.offsetStart, offsetStart = _c === void 0 ? 0 : _c, _d = _a.offsetEnd, offsetEnd = _d === void 0 ? 0 : _d, start = _a.start, distance = _a.distance, tween = _a.tween, _e = _a.addClasses, addClasses = _e === void 0 ? false : _e, _f = _a.callback, callback = _f === void 0 ? function () { } : _f;
+        var element = _a.element, _b = _a.normalizeInitialView, normalizeInitialView = _b === void 0 ? false : _b, _c = _a.offsetStart, offsetStart = _c === void 0 ? 0 : _c, _d = _a.offsetEnd, offsetEnd = _d === void 0 ? 0 : _d, start = _a.start, distance = _a.distance, tweenElement = _a.tweenElement, tweenCss = _a.tweenCss, _e = _a.addClasses, addClasses = _e === void 0 ? false : _e, _f = _a.callback, callback = _f === void 0 ? function () { } : _f;
         this.controller = controller;
         this.element = element;
         this.start = 0;
@@ -19,10 +30,8 @@ var Observer = /** @class */ (function () {
             offsetEnd: offsetEnd,
             start: start,
             distance: distance,
-            tween: {
-                element: (tween === null || tween === void 0 ? void 0 : tween.element) || this.element,
-                css: tween === null || tween === void 0 ? void 0 : tween.css,
-            },
+            tweenElement: tweenElement || this.element,
+            tweenCss: tweenCss,
             addClasses: addClasses,
             callback: callback,
         };
@@ -36,13 +45,16 @@ var Observer = /** @class */ (function () {
         };
         this.init();
     }
+    Observer.prototype.setOptions = function (options) {
+        this.options = __assign(__assign({}, this.options), options);
+    };
     Observer.prototype.construct = function () {
         var viewport = this.controller.viewport;
         if (!viewport)
             return;
-        var tween = this.options.tween;
-        if (tween.css)
-            (0, functions_1.applyTween)(tween, 0);
+        var _a = this.options, tweenCss = _a.tweenCss, tweenElement = _a.tweenElement;
+        if (tweenCss)
+            (0, functions_1.applyTween)(tweenElement, tweenCss, 0);
         this.bounds = (0, getBounds_1.default)(this.element);
         var viewBounds = viewport.getBounds().viewable;
         var scrollY = this.controller.scroll.scrollY;
@@ -61,11 +73,11 @@ var Observer = /** @class */ (function () {
     };
     Observer.prototype.update = function () {
         var scrollY = this.controller.scroll.scrollY;
-        var _a = this.options, tween = _a.tween, addClasses = _a.addClasses, callback = _a.callback;
+        var _a = this.options, tweenCss = _a.tweenCss, tweenElement = _a.tweenElement, addClasses = _a.addClasses, callback = _a.callback;
         var progress = (0, functions_1.getProgress)(this.start, this.distance, scrollY);
         var inViewport = progress > 0 && progress < 1;
-        if (tween.css)
-            (0, functions_1.applyTween)(tween, progress);
+        if (tweenCss)
+            (0, functions_1.applyTween)(tweenElement, tweenCss, progress);
         if (addClasses)
             (0, functions_1.applyClasses)(this.element, progress);
         if (callback && typeof callback === 'function') {

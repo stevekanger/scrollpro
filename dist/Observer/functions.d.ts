@@ -1,5 +1,5 @@
-import type { ObserverOptions, Tween, IViewport, Bounds } from '../types';
-export declare function applyTween(tween: Tween, progress: number): void;
+import type { ObserverOptions, TweenCss, IViewport, Bounds } from '../types';
+export declare function applyTween(element: HTMLElement, css: TweenCss, progress: number): void;
 export declare function getInInitialView(offsetTop: number, viewBounds: Bounds): boolean;
 export declare function getStart(offsetTop: number, inInitialView: boolean, options: ObserverOptions, viewport: IViewport): number;
 export declare function getDistance(offsetTop: number, inInitialView: boolean, options: ObserverOptions, viewport: IViewport, bounds: Bounds): number;

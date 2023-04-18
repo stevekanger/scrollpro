@@ -15,6 +15,7 @@ declare class Controller implements IController {
     kill(): void;
     refresh(): void;
     update(): void;
+    setOptions(options: Partial<ControllerOptions>): void;
     createViewport(args?: ViewportArgs): IViewport;
     createContent(args: ContentArgs): IContent;
     createScrollbar(args: ScrollbarArgs): IScrollbar;

@@ -104,6 +104,9 @@ class Controller implements IController {
   }
 
   fire(e: keyof ControllerEvents) {
+    const events = ['init', 'kill', 'update', 'refresh']
+    if (!events.includes(e)) return
+
     const runOrder = ['scrollbar', 'sticky', 'observer']
 
     if (this.content) this.content[e]()
@@ -131,6 +134,13 @@ class Controller implements IController {
 
   update() {
     this.fire('update')
+  }
+
+  setOptions(options: Partial<ControllerOptions>) {
+    this.options = {
+      ...this.options,
+      ...options,
+    }
   }
 
   createViewport(args?: ViewportArgs) {

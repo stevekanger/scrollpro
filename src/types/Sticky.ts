@@ -16,6 +16,7 @@ export type StickyOptions = {
 }
 
 export interface ISticky {
+  setOptions: (options: Partial<StickyOptions>) => void
   init: () => void
   kill: () => void
   update: () => void

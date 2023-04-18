@@ -51,10 +51,8 @@ function callback(e: ObserverEvent) {
 const obs = ctl.createObserver({
   element,
   callback,
-  tween: {
-    css: {
-      transform: 'translateX({0, 100}px)',
-    },
+  tweenCss: {
+    transform: 'translateX({0, 100}px)',
   },
 }) as IObserver & {
   controller: IController

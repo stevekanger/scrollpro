@@ -17,6 +17,7 @@ export interface IController {
   kill: () => void
   refresh: () => void
   update: () => void
+  setOptions: (options: Partial<ControllerOptions>) => void
   createViewport: (args: ViewportArgs) => void
   createContent: (args: ContentArgs) => IContent
   createScrollbar: (args: ScrollbarArgs) => IScrollbar

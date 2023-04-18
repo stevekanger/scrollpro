@@ -1,4 +1,4 @@
-import type { ObserverOptions, Tween, IViewport, Bounds } from '../types'
+import type { ObserverOptions, TweenCss, IViewport, Bounds } from '../types'
 
 const regex = /\{(.*?)\}/g
 
@@ -30,9 +30,11 @@ function replaceString(progress: number) {
   }
 }
 
-export function applyTween(tween: Tween, progress: number) {
-  const { element, css } = tween
-
+export function applyTween(
+  element: HTMLElement,
+  css: TweenCss,
+  progress: number
+) {
   if (!css) return
 
   Object.keys(css).forEach((key: string) => {

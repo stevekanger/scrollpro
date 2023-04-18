@@ -1,4 +1,4 @@
-import type { IController, IScrollbar, ScrollbarArgs } from '../types';
+import type { IController, IScrollbar, ScrollbarArgs, ScrollbarOptions } from '../types';
 declare class Scrollbar implements IScrollbar {
     private controller;
     private element;
@@ -7,6 +7,7 @@ declare class Scrollbar implements IScrollbar {
     private thumb;
     private options;
     constructor(controller: IController, { element, axis, orientation, useAnimation, }: ScrollbarArgs);
+    setOptions(options: Partial<ScrollbarOptions>): void;
     init(): void;
     kill(): void;
     update(): void;

@@ -1,4 +1,4 @@
-import type { IController, ObserverArgs, IObserver } from '../types';
+import type { IController, ObserverArgs, IObserver, ObserverOptions } from '../types';
 declare class Observer implements IObserver {
     private controller;
     private element;
@@ -6,7 +6,8 @@ declare class Observer implements IObserver {
     private distance;
     private options;
     private bounds;
-    constructor(controller: IController, { element, normalizeInitialView, offsetStart, offsetEnd, start, distance, tween, addClasses, callback, }: ObserverArgs);
+    constructor(controller: IController, { element, normalizeInitialView, offsetStart, offsetEnd, start, distance, tweenElement, tweenCss, addClasses, callback, }: ObserverArgs);
+    setOptions(options: Partial<ObserverOptions>): void;
     private construct;
     init(): void;
     kill(): void;

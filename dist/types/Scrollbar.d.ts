@@ -5,6 +5,7 @@ export declare type ScrollbarArgs = {
     useAnimation?: boolean;
 };
 export interface IScrollbar {
+    setOptions: (options: Partial<ScrollbarOptions>) => void;
     init: () => void;
     kill: () => void;
     update: () => void;

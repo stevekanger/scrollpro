@@ -34,7 +34,8 @@ class Observer implements IObserver {
       offsetEnd = 0,
       start,
       distance,
-      tween,
+      tweenElement,
+      tweenCss,
       addClasses = false,
       callback = () => {},
     }: ObserverArgs
@@ -50,10 +51,8 @@ class Observer implements IObserver {
       offsetEnd,
       start,
       distance,
-      tween: {
-        element: tween?.element || this.element,
-        css: tween?.css,
-      },
+      tweenElement: tweenElement || this.element,
+      tweenCss,
       addClasses,
       callback,
     }
@@ -70,13 +69,20 @@ class Observer implements IObserver {
     this.init()
   }
 
+  setOptions(options: Partial<ObserverOptions>) {
+    this.options = {
+      ...this.options,
+      ...options,
+    }
+  }
+
   private construct() {
     const { viewport } = this.controller
 
     if (!viewport) return
 
-    const { tween } = this.options
-    if (tween.css) applyTween(tween, 0)
+    const { tweenCss, tweenElement } = this.options
+    if (tweenCss) applyTween(tweenElement, tweenCss, 0)
     this.bounds = getBounds(this.element)
     const viewBounds = viewport.getBounds().viewable
     const { scrollY } = this.controller.scroll
@@ -105,12 +111,12 @@ class Observer implements IObserver {
 
   update() {
     const { scrollY } = this.controller.scroll
-    const { tween, addClasses, callback } = this.options
+    const { tweenCss, tweenElement, addClasses, callback } = this.options
 
     const progress = getProgress(this.start, this.distance, scrollY)
     const inViewport = progress > 0 && progress < 1
 
-    if (tween.css) applyTween(tween, progress)
+    if (tweenCss) applyTween(tweenElement, tweenCss, progress)
     if (addClasses) applyClasses(this.element, progress)
 
     if (callback && typeof callback === 'function') {

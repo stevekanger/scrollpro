@@ -67,6 +67,9 @@ var Controller = /** @class */ (function () {
     };
     Controller.prototype.fire = function (e) {
         var _this = this;
+        var events = ['init', 'kill', 'update', 'refresh'];
+        if (!events.includes(e))
+            return;
         var runOrder = ['scrollbar', 'sticky', 'observer'];
         if (this.content)
             this.content[e]();
@@ -91,6 +94,9 @@ var Controller = /** @class */ (function () {
     };
     Controller.prototype.update = function () {
         this.fire('update');
+    };
+    Controller.prototype.setOptions = function (options) {
+        this.options = __assign(__assign({}, this.options), options);
     };
     Controller.prototype.createViewport = function (args) {
         if (this.viewport) {

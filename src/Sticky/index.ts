@@ -53,6 +53,13 @@ class Sticky implements ISticky {
     this.init()
   }
 
+  setOptions(options: Partial<StickyOptions>) {
+    this.options = {
+      ...this.options,
+      ...options,
+    }
+  }
+
   private construct() {
     const { viewport } = this.controller
 

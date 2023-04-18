@@ -1,4 +1,10 @@
-import type { Bounds, IController, IScrollbar, ScrollbarArgs } from '../types'
+import type {
+  Bounds,
+  IController,
+  IScrollbar,
+  ScrollbarArgs,
+  ScrollbarOptions,
+} from '../types'
 import getBounds from '../utils/getBounds'
 import { setStyles } from './functions'
 import applyListeners from '../utils/applyListeners'
@@ -50,6 +56,13 @@ class Scrollbar implements IScrollbar {
     this.onWheel = this.onWheel.bind(this)
 
     this.init()
+  }
+
+  setOptions(options: Partial<ScrollbarOptions>) {
+    this.options = {
+      ...this.options,
+      ...options,
+    }
   }
 
   init() {
