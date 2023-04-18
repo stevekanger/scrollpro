@@ -103,7 +103,7 @@ class Controller implements IController {
     this.listeners[e]?.delete(fn)
   }
 
-  fire(e: keyof ControllerEvents, data?: Scroll) {
+  fire(e: keyof ControllerEvents) {
     const runOrder = ['scrollbar', 'sticky', 'observer']
 
     if (this.content) this.content[e]()
@@ -114,7 +114,7 @@ class Controller implements IController {
       })
     })
 
-    this.listeners[e].forEach((listener) => listener(data))
+    this.listeners[e].forEach((listener) => listener(this.scroll))
   }
 
   kill() {
@@ -180,7 +180,7 @@ class Controller implements IController {
     this.scroll.scrollX = Math.min(this.scroll.scrollX, this.scroll.limitX)
     this.scroll.scrollY = Math.min(this.scroll.scrollY, this.scroll.limitY)
 
-    this.fire('update', this.scroll)
+    this.fire('update')
   }
 
   scrollTo({ x, y, animate = true }: ScrollToArgs) {
@@ -200,7 +200,7 @@ class Controller implements IController {
     }
 
     this.scroll = setScrollToDeltas(this.scroll)
-    this.fire('update', this.scroll)
+    this.fire('update')
   }
 
   private animateScroll() {
@@ -215,7 +215,7 @@ class Controller implements IController {
       this.scroll = setScrollToDeltas(this.scroll)
     }
 
-    this.fire('update', this.scroll)
+    this.fire('update')
   }
 }
 

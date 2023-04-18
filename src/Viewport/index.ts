@@ -60,16 +60,16 @@ class Viewport implements IViewport {
     }
   }
 
-  init() {
+  kill() {
     const {
       options: { disableKeyNavigation },
       browserSupport: { hasWheel, hasPointer, hasTouch, hasKeyDown },
     } = this.controller
 
-    this.construct()
+    this.controller.viewport = null
     document.body.style.touchAction = 'pinch-zoom'
 
-    applyListeners('add', [
+    applyListeners('remove', [
       {
         element: this.element,
         event: 'wheel',
@@ -97,16 +97,16 @@ class Viewport implements IViewport {
     ])
   }
 
-  kill() {
+  private init() {
     const {
       options: { disableKeyNavigation },
       browserSupport: { hasWheel, hasPointer, hasTouch, hasKeyDown },
     } = this.controller
 
-    this.controller.viewport = null
+    this.construct()
     document.body.style.touchAction = 'pinch-zoom'
 
-    applyListeners('remove', [
+    applyListeners('add', [
       {
         element: this.element,
         event: 'wheel',

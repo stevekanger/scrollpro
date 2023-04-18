@@ -9,7 +9,6 @@ export type ViewportArgs = {
 export interface IViewport {
   getBounds: () => ViewportBounds
   kill: () => void
-  init: () => void
 }
 
 export type TouchStart = {

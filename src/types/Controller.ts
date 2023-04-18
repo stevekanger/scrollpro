@@ -61,7 +61,7 @@ export type ControllerOptions = {
   ease: number
 }
 
-export type EventFn = (e?: any) => void
+export type EventFn = (e?: Scroll) => void
 
 export type ControllerEvents = {
   init: Set<EventFn>
