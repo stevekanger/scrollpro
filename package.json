@@ -20,8 +20,7 @@
   "scripts": {
     "test": "jest",
     "clean": "tsc --build --clean",
-    "build": "tsc --project tsconfig.build.json",
-    "prepare": "npm run build"
+    "build": "tsc --project tsconfig.build.json"
   },
   "author": "Steve Kanger",
   "repository": "https://github.com/stevekanger/scrollpro.git",
