@@ -1,6 +1,6 @@
 {
   "name": "scrollpro",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Smooth momentum scrolling and parallax library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,8 +21,7 @@
     "test": "jest",
     "clean": "tsc --build --clean",
     "build": "tsc --project tsconfig.build.json -w",
-    "build:publish": "tsc --project tsconfig.build.json",
-    "prepare": "npm run build:publish"
+    "prepare": "tsc --project tsconfig.build.json"
   },
   "author": "Steve Kanger",
   "repository": "https://github.com/stevekanger/scrollpro.git",
