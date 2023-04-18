@@ -2,7 +2,13 @@
  * @jest-environment jsdom
  */
 
-import type { Bounds, IController, IObserver, ObserverEvent } from '../../types'
+import type {
+  Bounds,
+  IController,
+  IObserver,
+  ObserverEvent,
+  ObserverOptions,
+} from '../../types'
 import { createTestElement } from '../testUtils'
 import Controller from '../../Controller'
 
@@ -43,6 +49,7 @@ let observerEvent = {
   progress: 0,
   inViewport: false,
 } as ObserverEvent
+
 function callback(e: ObserverEvent) {
   observerEvent = e
   console.log(e)
@@ -59,6 +66,7 @@ const obs = ctl.createObserver({
   bounds: Bounds
   start: number
   distance: number
+  options: ObserverOptions
 }
 
 describe('Observer class', () => {
@@ -92,6 +100,23 @@ describe('Observer class', () => {
     expect(observerEvent).toEqual({
       inViewport: false,
       progress: 1,
+    })
+  })
+
+  it('correctly sets the options', () => {
+    obs.setOptions({ start: 200, offsetEnd: 400 })
+    expect(obs.options).toEqual({
+      normalizeInitialView: false,
+      offsetStart: 0,
+      offsetEnd: 400,
+      start: 200,
+      distance: undefined,
+      callback,
+      tweenElement: element,
+      addClasses: false,
+      tweenCss: {
+        transform: 'translateX({0, 100}px)',
+      },
     })
   })
 

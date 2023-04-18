@@ -121,4 +121,18 @@ describe('Controller class', () => {
     const sticky = ctl.createSticky({ element })
     expect(ctl['items'].sticky).toContain(sticky)
   })
+
+  it('Correctly handles setting the options', () => {
+    ctl.setOptions({
+      disableKeyNavigation: true,
+    })
+    expect(ctl.options).toEqual({
+      ease: 0.1,
+      keyStep: 120,
+      disableKeyNavigation: true,
+      firefoxMult: 15,
+      touchMult: 2,
+      mouseMult: 1,
+    })
+  })
 })

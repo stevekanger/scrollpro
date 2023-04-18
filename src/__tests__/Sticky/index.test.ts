@@ -4,7 +4,7 @@
 
 import { createTestElement } from '../testUtils'
 import Controller from '../../Controller'
-import { IController, ISticky } from '../../types'
+import { IController, ISticky, StickyOptions } from '../../types'
 
 // Again just copied the rect from the testing site into this element. Hack Hack //\\
 const element = createTestElement({
@@ -25,6 +25,7 @@ ctl.createViewport()
 const sticky = ctl.createSticky({ element }) as ISticky & {
   controller: IController
   element: HTMLElement
+  options: StickyOptions
 }
 
 describe('Sticky class', () => {
@@ -36,6 +37,20 @@ describe('Sticky class', () => {
   it('Correctly updates the sticky position', () => {
     sticky.controller.scroll.scrollY = 4000
     expect(element.style.transform).toBe('translateY(-200px)')
+  })
+
+  it('Correctly sets the options', () => {
+    sticky.setOptions({
+      bottom: 200,
+      distance: 600,
+    })
+    expect(sticky.options).toEqual({
+      top: 0,
+      bottom: 200,
+      start: undefined,
+      distance: 600,
+      ignoreBounds: false,
+    })
   })
 
   it('Correctly kills the sticky element', () => {

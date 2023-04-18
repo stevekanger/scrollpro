@@ -3,7 +3,7 @@
  */
 
 import Controller from '../../Controller'
-import { Bounds, IController, IScrollbar } from '../../types'
+import { Bounds, IController, IScrollbar, ScrollbarOptions } from '../../types'
 import { createTestElement } from '../testUtils'
 
 const bounds = {
@@ -28,6 +28,7 @@ const scrollbar = ctl.createScrollbar({ element }) as IScrollbar & {
   thumb: HTMLElement
   element: HTMLElement
   bounds: Bounds
+  options: ScrollbarOptions
   onPointerMove: (e: PointerEvent) => void
   onWheel: (e: WheelEvent) => void
 }
@@ -59,6 +60,18 @@ describe('Scrollbar class', () => {
     scrollbar.onWheel(new WheelEvent('wheel', { deltaX: 200, deltaY: 200 }))
     expect(ctl.scroll.deltaX).toBe(200)
     expect(ctl.scroll.deltaY).toBe(200)
+  })
+
+  it('Correctly sets the options', () => {
+    scrollbar.setOptions({
+      axis: 'x',
+      useAnimation: true,
+    })
+    expect(scrollbar.options).toEqual({
+      axis: 'x',
+      useAnimation: true,
+      orientation: 'vertical',
+    })
   })
 
   it('Correctly kills the scrollbar', () => {
