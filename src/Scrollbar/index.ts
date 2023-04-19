@@ -192,6 +192,7 @@ class Scrollbar implements IScrollbar {
 
   private onWheel(e: WheelEvent) {
     e.preventDefault()
+    e.stopPropagation()
     const {
       scroll: { deltaX, deltaY },
       options: { firefoxMult, mouseMult },
