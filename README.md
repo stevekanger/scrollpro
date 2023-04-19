@@ -2,7 +2,7 @@
 
 Smooth momentum scrolling library
 
-<small style="color: #cc3300">Disclaimer: As of now nested instances partial support. Nested scrollbars may not work as intended.</small>
+<small>Disclaimer: As of now nested instances partial support. Nested scrollbars may not work as intended.</small>
 
 ## Installation
 
