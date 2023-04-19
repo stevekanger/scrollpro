@@ -140,6 +140,8 @@ class Viewport implements IViewport {
   }
 
   private onWheel(e: WheelEvent) {
+    e.preventDefault()
+    e.stopPropagation()
     const { firefoxMult, mouseMult } = this.controller.options
     let x = -e.deltaX
     let y = -e.deltaY
@@ -167,6 +169,7 @@ class Viewport implements IViewport {
 
   private onPointerDown(e: PointerEvent) {
     if (e.pointerType === 'mouse') return
+    e.stopPropagation()
 
     this.touchStart.x = e.pageX
     this.touchStart.y = e.pageY

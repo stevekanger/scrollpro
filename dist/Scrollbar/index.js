@@ -120,6 +120,7 @@ var Scrollbar = /** @class */ (function () {
         e.preventDefault();
     };
     Scrollbar.prototype.onPointerDown = function (e) {
+        e.stopPropagation();
         this.onPointerMove(e);
         window.addEventListener('pointermove', this.onPointerMove);
         window.addEventListener('selectstart', this.preventSelect);
@@ -129,7 +130,6 @@ var Scrollbar = /** @class */ (function () {
         window.removeEventListener('selectstart', this.preventSelect);
     };
     Scrollbar.prototype.onPointerMove = function (e) {
-        e.stopPropagation();
         var _a = this.controller.scroll, deltaX = _a.deltaX, deltaY = _a.deltaY, limitX = _a.limitX, limitY = _a.limitY;
         var _b = this.options, axis = _b.axis, orientation = _b.orientation, useAnimation = _b.useAnimation;
         var limit = axis === 'y' ? limitY : limitX;
@@ -138,7 +138,9 @@ var Scrollbar = /** @class */ (function () {
         var isVertical = orientation === 'vertical';
         var trackLength = isVertical ? this.bounds.height : this.bounds.width;
         var trackStart = isVertical ? this.bounds.top : this.bounds.left;
-        var pointerPos = isVertical ? e.pageY : e.pageX;
+        var pointerPos = isVertical
+            ? e.pageY - window.scrollY
+            : e.pageX - window.scrollX;
         var pos = (limit / trackLength) * (pointerPos - trackStart);
         if (axis === 'y') {
             this.controller.scrollTo({
@@ -155,6 +157,7 @@ var Scrollbar = /** @class */ (function () {
         });
     };
     Scrollbar.prototype.onWheel = function (e) {
+        e.preventDefault();
         var _a = this.controller, _b = _a.scroll, deltaX = _b.deltaX, deltaY = _b.deltaY, _c = _a.options, firefoxMult = _c.firefoxMult, mouseMult = _c.mouseMult;
         var useAnimation = this.options.useAnimation;
         var dx = -e.deltaX;

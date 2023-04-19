@@ -119,6 +119,8 @@ var Viewport = /** @class */ (function () {
         this.viewableBounds = (0, functions_1.getViewableBounds)(this.bounds, this.element);
     };
     Viewport.prototype.onWheel = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         var _a = this.controller.options, firefoxMult = _a.firefoxMult, mouseMult = _a.mouseMult;
         var x = -e.deltaX;
         var y = -e.deltaY;
@@ -141,6 +143,7 @@ var Viewport = /** @class */ (function () {
     Viewport.prototype.onPointerDown = function (e) {
         if (e.pointerType === 'mouse')
             return;
+        e.stopPropagation();
         this.touchStart.x = e.pageX;
         this.touchStart.y = e.pageY;
         this.onPointerMove(e);

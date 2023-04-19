@@ -147,6 +147,7 @@ class Scrollbar implements IScrollbar {
   }
 
   private onPointerDown(e: PointerEvent) {
+    e.stopPropagation()
     this.onPointerMove(e)
     window.addEventListener('pointermove', this.onPointerMove)
     window.addEventListener('selectstart', this.preventSelect)
@@ -158,7 +159,6 @@ class Scrollbar implements IScrollbar {
   }
 
   private onPointerMove(e: PointerEvent) {
-    e.stopPropagation()
     let { deltaX, deltaY, limitX, limitY } = this.controller.scroll
     const { axis, orientation, useAnimation } = this.options
 
@@ -169,7 +169,9 @@ class Scrollbar implements IScrollbar {
     const isVertical = orientation === 'vertical'
     const trackLength = isVertical ? this.bounds.height : this.bounds.width
     const trackStart = isVertical ? this.bounds.top : this.bounds.left
-    const pointerPos = isVertical ? e.pageY : e.pageX
+    const pointerPos = isVertical
+      ? e.pageY - window.scrollY
+      : e.pageX - window.scrollX
     const pos = (limit / trackLength) * (pointerPos - trackStart)
 
     if (axis === 'y') {
@@ -189,6 +191,7 @@ class Scrollbar implements IScrollbar {
   }
 
   private onWheel(e: WheelEvent) {
+    e.preventDefault()
     const {
       scroll: { deltaX, deltaY },
       options: { firefoxMult, mouseMult },
