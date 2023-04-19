@@ -95,6 +95,17 @@ class Controller implements IController {
     this.animateScroll = this.animateScroll.bind(this)
   }
 
+  getScroll() {
+    return this.scroll
+  }
+
+  setOptions(options: Partial<ControllerOptions>) {
+    this.options = {
+      ...this.options,
+      ...options,
+    }
+  }
+
   on(e: keyof ControllerEvents, fn: EventFn) {
     this.listeners[e]?.add(fn)
   }
@@ -134,13 +145,6 @@ class Controller implements IController {
 
   update() {
     this.fire('update')
-  }
-
-  setOptions(options: Partial<ControllerOptions>) {
-    this.options = {
-      ...this.options,
-      ...options,
-    }
   }
 
   createViewport(args?: ViewportArgs) {

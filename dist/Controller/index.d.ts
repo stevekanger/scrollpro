@@ -9,6 +9,7 @@ declare class Controller implements IController {
     private aF;
     private listeners;
     constructor(options?: Partial<ControllerOptions>);
+    getScroll(): Scroll;
     on(e: keyof ControllerEvents, fn: EventFn): void;
     off(e: keyof ControllerEvents, fn: EventFn): void;
     fire(e: keyof ControllerEvents): void;

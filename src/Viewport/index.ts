@@ -169,7 +169,7 @@ class Viewport implements IViewport {
 
   private onPointerDown(e: PointerEvent) {
     if (e.pointerType === 'mouse') return
-    e.stopPropagation()
+    if (e.stopPropagation) e.stopPropagation()
 
     this.touchStart.x = e.pageX
     this.touchStart.y = e.pageY

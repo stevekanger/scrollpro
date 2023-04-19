@@ -143,6 +143,52 @@ const scrollbar = ctl.createScrollbar({ element: scrollbarEl })
 
 ## Public Controller Methods
 
+### `getScroll()`
+
+Gets the current scroll values.
+
+#### Args: none
+
+#### Returns: Scroll
+
+| value     | type   | Description                                                                                                              |
+| --------- | ------ | ------------------------------------------------------------------------------------------------------------------------ |
+| scrollX   | number | The current scroll value of the x axis.                                                                                  |
+| scrollY   | number | The current scroll value of the y axis.                                                                                  |
+| deltaX    | number | The scrollX value will animate until it reaches this value.                                                              |
+| deltaY    | number | The scrollY value will animate until it reaches this value.                                                              |
+| limitX    | number | This is the limit the scrollX can get to. If you don't have content set or manually set a limit this will be `Infinity`. |
+| limitY    | number | This is the limit the scrollY can get to. If you don't have content set or manually set a limit this will be `Infinity`. |
+| progressX | number | This is the progress the scrollX has made relative to the limitX from 0 to 1.                                            |
+| progressY | number | This is the progress the scrollY has made relative to the limitY from 0 to 1                                             |
+
+<br>
+
+### `setOptions({Options})`
+
+Sets controller options. It will combine the already set options with the options you pass in.
+
+#### Args:
+
+| Argument          | Required | Type   | Description                      |
+| ----------------- | -------- | ------ | -------------------------------- |
+| ControllerOptions | true     | Object | Parameters for virtual scrolling |
+
+#### Options:
+
+| Option               | Type    | Default | Description                                                                                         |
+| -------------------- | ------- | ------- | --------------------------------------------------------------------------------------------------- |
+| keystep              | number  | 120     | The amount in px you want to scroll when the up and down keys are pressed                           |
+| firefoxMult          | number  | 25      | The speed multiplier used for firefox browser                                                       |
+| touchMult            | number  | 2       | The speed multiplier used for touch screens                                                         |
+| mouseMult            | number  | 1       | The speed multiplier used for the mouse wheel                                                       |
+| ease                 | number  | 0.1     | The ease value of the scroll container. The speed that the container comes to a stop.               |
+| disableKeyNavigation | boolean | false   | If you want to disable the ability to scroll with the keyboard eg. pageup and pagedown buttons ect. |
+
+#### Returns: undefined
+
+<br>
+
 ### `on(event, fn)`
 
 Allows you to set event listeners for the controller events stated above.
@@ -217,31 +263,6 @@ Updates the controller items with the current scroll values.
 
 <br>
 
-### `setOptions({Options})`
-
-Sets controller options. It will combine the already set options with the options you pass in.
-
-#### Args:
-
-| Argument          | Required | Type   | Description                      |
-| ----------------- | -------- | ------ | -------------------------------- |
-| ControllerOptions | true     | Object | Parameters for virtual scrolling |
-
-#### Options:
-
-| Option               | Type    | Default | Description                                                                                         |
-| -------------------- | ------- | ------- | --------------------------------------------------------------------------------------------------- |
-| keystep              | number  | 120     | The amount in px you want to scroll when the up and down keys are pressed                           |
-| firefoxMult          | number  | 25      | The speed multiplier used for firefox browser                                                       |
-| touchMult            | number  | 2       | The speed multiplier used for touch screens                                                         |
-| mouseMult            | number  | 1       | The speed multiplier used for the mouse wheel                                                       |
-| ease                 | number  | 0.1     | The ease value of the scroll container. The speed that the container comes to a stop.               |
-| disableKeyNavigation | boolean | false   | If you want to disable the ability to scroll with the keyboard eg. pageup and pagedown buttons ect. |
-
-#### Returns: undefined
-
-<br>
-
 ### `createViewort({Options})`
 
 Creates the viewport. This initializes the controller and sets the required event listeners for virtualized scrolling.
@@ -258,10 +279,12 @@ Creates the viewport. This initializes the controller and sets the required even
 | ------- | -------- | ------- | --------------------- | ----------------------------------------------------------------- |
 | element | false    | window  | HTMLElement or window | Optional element to use as the viewport for the scroll controller |
 
-#### Returns: Viewport Methods
+#### Returns:
 
-`getBounds()`: returns the bounds of the viewport.<br>
-`kill()` : kills the viewport.
+| value     | type     | Description                         |
+| --------- | -------- | ----------------------------------- |
+| getBounds | function | returns the bounds of the viewport. |
+| kill      | function | kills the viewport.                 |
 
 <br>
 
@@ -281,12 +304,14 @@ Creates the content. This is the div that will be translated up and down when vi
 | ------- | -------- | ------- | ----------- | -------------------------------------- |
 | element | true     | null    | HTMLElement | Element to use as the content wrapper. |
 
-#### Returns: Content Methods
+#### Returns:
 
-`init()`: Initializes the content. This will be automatically called during init.<br>
-`kill()`: Kills the content and removes it from event list.<br>
-`refresh()`: Recalculates the content and sets new scroll limits.<br>
-`update()`: Updates the content position with the current scroll values.<br>
+| value   | type     | Description                                                             |
+| ------- | -------- | ----------------------------------------------------------------------- |
+| init    | function | Initializes the content. This will be automatically called during init. |
+| kill    | function | Kills the content and removes it from event list.                       |
+| refresh | function | Recalculates the content and sets new scroll limits.                    |
+| update  | function | Updates the content position with the current scroll values.            |
 
 <br>
 
@@ -309,13 +334,15 @@ Creates as scrollbar inside of an html element.
 | orientation  | false    | 'vertical' | string      | This is which direction your scrollbar is oriented. Top to bottom 'vertical'. Side to side 'horizontal' |
 | useAnimation | false    | true       | boolean     | This is whether or not you want your scrollbar to use the same scrolling animation as the scroll uses.  |
 
-#### Returns: Scrollbar Methods
+#### Returns:
 
-`init()`: Initializes the scrollbar. This will automatically be called during intialization.<br>
-`kill()`: Kills the scrollbar removing it from the event list.<br>
-`refresh()`: Recalculates the scrollbar and updates it.<br>
-`update()`: Updates the scrollbar thumb with the current scroll values.<br>
-`setOptions({Options})`: sets the options. Will combine already set options.
+| value      | type     | Description                                                                        |
+| ---------- | -------- | ---------------------------------------------------------------------------------- |
+| setOptions | function | Sets the options. Will combine already set options.                                |
+| init       | function | Initializes the scrollbar. This will automatically be called during intialization. |
+| kill       | function | Kills the scrollbar removing it from the event list.                               |
+| refresh    | function | Recalculates the scrollbar and updates it.                                         |
+| update     | function | Updates the scrollbar thumb with the current scroll values.                        |
 
 <br>
 
@@ -344,15 +371,17 @@ Creates an observer for an html element. This will observe the elements place in
 | tweenElement         | false    | observer element | HTMLElement | If you passed in tweenCss this is the element that it will be applied to. If you set this to something other than the observer element you can use your observer element as a trigger for tweening a different element.                                                                    |
 | tweenCss             | false    | undefined        | TweenCss    | This is an object of javascript css values that you can set to tween your element based on its position in the viewport.                                                                                                                                                                   |
 
-See <a href="#tweening">Tweening</a> for further details on how to set up a tween/parallax element.
+<b>See <a href="#tweening">Tweening</a> for further details on how to set up a tween/parallax element.</b>
 
-#### Returns: Observer Methods
+#### Returns:
 
-`init()`: Initializes the Observer. This will be called automatically during init.<br>
-`kill()`: Kills the Observer removing it from the event list.<br>
-`refresh()`: Recalculates the Observer and updates it.<br>
-`update()`: Updates the Observer with the current scroll values.<br>
-`setOptions({Options})`: sets the options. Will combine already set options.
+| value      | type     | Description                                                                       |
+| ---------- | -------- | --------------------------------------------------------------------------------- |
+| setOptions | function | Sets the options. Will combine already set options.                               |
+| init       | function | Initializes the observer. This will automatically be called during intialization. |
+| kill       | function | Kills the observer removing it from the event list.                               |
+| refresh    | function | Recalculates the observer and updates it.                                         |
+| update     | function | Updates the observer with the current scroll values.                              |
 
 <br>
 
@@ -376,13 +405,15 @@ Creates a sticky element just like position sticky in css.
 | distance     | false    | undefined | number  | If you want to set the distance the item will stick for it will use this instead of calculating.                                  |
 | ignoreBounds | false    | false     | boolean | Whether you want your sticky element to stay within the parents bounds. If set to true it will stick to the top all the way down. |
 
-#### Returns: Sticky Methods
+#### Returns:
 
-`init()`: Initializes the Sticky element. This will be called automatically during the initialization.<br>
-`kill()`: Kills the Sticky element removing it from the event list.<br>
-`refresh()`: Recalculates the Sticky element and updates it.<br>
-`update()`: Updates the Sticky element with the current scroll values.<br>
-`setOptions({Options})`: sets the options. Will combine already set options.
+| value      | type     | Description                                                                             |
+| ---------- | -------- | --------------------------------------------------------------------------------------- |
+| setOptions | function | Sets the options. Will combine already set options.                                     |
+| init       | function | Initializes the sticky element. This will automatically be called during intialization. |
+| kill       | function | Kills the sticky element removing it from the event list.                               |
+| refresh    | function | Recalculates the sticky element and updates it.                                         |
+| update     | function | Updates the sticky element with the current scroll values.                              |
 
 <br>
 

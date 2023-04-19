@@ -147,7 +147,7 @@ class Scrollbar implements IScrollbar {
   }
 
   private onPointerDown(e: PointerEvent) {
-    e.stopPropagation()
+    if (e.stopPropagation) e.stopPropagation()
     this.onPointerMove(e)
     window.addEventListener('pointermove', this.onPointerMove)
     window.addEventListener('selectstart', this.preventSelect)

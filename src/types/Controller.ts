@@ -11,6 +11,7 @@ export interface IController {
   options: ControllerOptions
   items: ControllerItems
   browserSupport: BrowserSupport
+  getScroll: () => Scroll
   on: (e: keyof ControllerEvents, fn: EventFn) => void
   off: (e: keyof ControllerEvents, fn: EventFn) => void
   fire: (e: keyof ControllerEvents, data?: Scroll) => void

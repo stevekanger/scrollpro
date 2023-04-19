@@ -143,7 +143,8 @@ var Viewport = /** @class */ (function () {
     Viewport.prototype.onPointerDown = function (e) {
         if (e.pointerType === 'mouse')
             return;
-        e.stopPropagation();
+        if (e.stopPropagation)
+            e.stopPropagation();
         this.touchStart.x = e.pageX;
         this.touchStart.y = e.pageY;
         this.onPointerMove(e);

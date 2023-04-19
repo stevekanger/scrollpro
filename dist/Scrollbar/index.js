@@ -120,7 +120,8 @@ var Scrollbar = /** @class */ (function () {
         e.preventDefault();
     };
     Scrollbar.prototype.onPointerDown = function (e) {
-        e.stopPropagation();
+        if (e.stopPropagation)
+            e.stopPropagation();
         this.onPointerMove(e);
         window.addEventListener('pointermove', this.onPointerMove);
         window.addEventListener('selectstart', this.preventSelect);
@@ -158,6 +159,7 @@ var Scrollbar = /** @class */ (function () {
     };
     Scrollbar.prototype.onWheel = function (e) {
         e.preventDefault();
+        e.stopPropagation();
         var _a = this.controller, _b = _a.scroll, deltaX = _b.deltaX, deltaY = _b.deltaY, _c = _a.options, firefoxMult = _c.firefoxMult, mouseMult = _c.mouseMult;
         var useAnimation = this.options.useAnimation;
         var dx = -e.deltaX;

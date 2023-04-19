@@ -57,6 +57,9 @@ var Controller = /** @class */ (function () {
         this.refresh = this.refresh.bind(this);
         this.animateScroll = this.animateScroll.bind(this);
     }
+    Controller.prototype.getScroll = function () {
+        return this.scroll;
+    };
     Controller.prototype.on = function (e, fn) {
         var _a;
         (_a = this.listeners[e]) === null || _a === void 0 ? void 0 : _a.add(fn);
