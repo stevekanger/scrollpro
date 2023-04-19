@@ -93,6 +93,9 @@ var Viewport = /** @class */ (function () {
                 event: 'wheel',
                 fn: this.onWheel,
                 condition: hasWheel,
+                options: {
+                    passive: false,
+                },
             },
             {
                 element: this.element,

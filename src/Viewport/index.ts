@@ -112,6 +112,9 @@ class Viewport implements IViewport {
         event: 'wheel',
         fn: this.onWheel,
         condition: hasWheel,
+        options: {
+          passive: false,
+        },
       },
       {
         element: this.element,

@@ -3,6 +3,9 @@ type Listeners = {
   event: string
   fn: (...args: any) => void
   condition: boolean
+  options?: {
+    [key: string]: any
+  }
 }[]
 
 function applyListeners(type: 'add' | 'remove', listeners: Listeners) {
@@ -10,11 +13,19 @@ function applyListeners(type: 'add' | 'remove', listeners: Listeners) {
     if (!listener.condition) return
 
     if (type === 'add') {
-      listener.element.addEventListener(listener.event, listener.fn)
+      listener.element.addEventListener(
+        listener.event,
+        listener.fn,
+        listener.options || {}
+      )
       return
     }
 
-    listener.element.removeEventListener(listener.event, listener.fn)
+    listener.element.removeEventListener(
+      listener.event,
+      listener.fn,
+      listener.options || {}
+    )
   })
 }
 

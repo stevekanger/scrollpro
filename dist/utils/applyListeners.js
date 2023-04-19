@@ -5,10 +5,10 @@ function applyListeners(type, listeners) {
         if (!listener.condition)
             return;
         if (type === 'add') {
-            listener.element.addEventListener(listener.event, listener.fn);
+            listener.element.addEventListener(listener.event, listener.fn, listener.options || {});
             return;
         }
-        listener.element.removeEventListener(listener.event, listener.fn);
+        listener.element.removeEventListener(listener.event, listener.fn, listener.options || {});
     });
 }
 exports.default = applyListeners;
