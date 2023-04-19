@@ -10,13 +10,13 @@ declare class Controller implements IController {
     private listeners;
     constructor(options?: Partial<ControllerOptions>);
     getScroll(): Scroll;
+    setOptions(options: Partial<ControllerOptions>): void;
     on(e: keyof ControllerEvents, fn: EventFn): void;
     off(e: keyof ControllerEvents, fn: EventFn): void;
     fire(e: keyof ControllerEvents): void;
     kill(): void;
     refresh(): void;
     update(): void;
-    setOptions(options: Partial<ControllerOptions>): void;
     createViewport(args?: ViewportArgs): IViewport;
     createContent(args: ContentArgs): IContent;
     createScrollbar(args: ScrollbarArgs): IScrollbar;

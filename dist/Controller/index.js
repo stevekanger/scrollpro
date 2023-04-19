@@ -60,6 +60,9 @@ var Controller = /** @class */ (function () {
     Controller.prototype.getScroll = function () {
         return this.scroll;
     };
+    Controller.prototype.setOptions = function (options) {
+        this.options = __assign(__assign({}, this.options), options);
+    };
     Controller.prototype.on = function (e, fn) {
         var _a;
         (_a = this.listeners[e]) === null || _a === void 0 ? void 0 : _a.add(fn);
@@ -97,9 +100,6 @@ var Controller = /** @class */ (function () {
     };
     Controller.prototype.update = function () {
         this.fire('update');
-    };
-    Controller.prototype.setOptions = function (options) {
-        this.options = __assign(__assign({}, this.options), options);
     };
     Controller.prototype.createViewport = function (args) {
         if (this.viewport) {
