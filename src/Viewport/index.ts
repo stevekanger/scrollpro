@@ -12,14 +12,19 @@ import { getDeltaFromKey, getViewableBounds } from './functions'
 
 class Viewport implements IViewport {
   private element: Window | HTMLElement
+  private eventTarget: Window | HTMLElement
   private controller: IController
   private touchStart: TouchStart
   private bounds: Bounds
   private viewableBounds: Bounds
 
-  constructor(controller: IController, { element = window }: ViewportArgs) {
+  constructor(
+    controller: IController,
+    { element = window, eventTarget }: ViewportArgs
+  ) {
     this.controller = controller
     this.element = element
+    this.eventTarget = eventTarget || this.element
 
     this.touchStart = {
       x: 0,
@@ -60,30 +65,33 @@ class Viewport implements IViewport {
     }
   }
 
-  kill() {
+  private init() {
     const {
       options: { disableKeyNavigation },
       browserSupport: { hasWheel, hasPointer, hasTouch, hasKeyDown },
     } = this.controller
 
-    this.controller.viewport = null
+    this.construct()
     document.body.style.touchAction = 'pinch-zoom'
 
-    applyListeners('remove', [
+    applyListeners('add', [
       {
-        element: this.element,
+        element: this.eventTarget,
         event: 'wheel',
         fn: this.onWheel,
         condition: hasWheel,
+        options: {
+          passive: false,
+        },
       },
       {
-        element: this.element,
+        element: this.eventTarget,
         event: 'pointerdown',
         fn: this.onPointerDown,
         condition: hasPointer && hasTouch,
       },
       {
-        element: this.element,
+        element: this.eventTarget,
         event: 'pointerup',
         fn: this.onPointerUp,
         condition: hasPointer && hasTouch,
@@ -97,33 +105,30 @@ class Viewport implements IViewport {
     ])
   }
 
-  private init() {
+  kill() {
     const {
       options: { disableKeyNavigation },
       browserSupport: { hasWheel, hasPointer, hasTouch, hasKeyDown },
     } = this.controller
 
-    this.construct()
+    this.controller.viewport = null
     document.body.style.touchAction = 'pinch-zoom'
 
-    applyListeners('add', [
+    applyListeners('remove', [
       {
-        element: this.element,
+        element: this.eventTarget,
         event: 'wheel',
         fn: this.onWheel,
         condition: hasWheel,
-        options: {
-          passive: false,
-        },
       },
       {
-        element: this.element,
+        element: this.eventTarget,
         event: 'pointerdown',
         fn: this.onPointerDown,
         condition: hasPointer && hasTouch,
       },
       {
-        element: this.element,
+        element: this.eventTarget,
         event: 'pointerup',
         fn: this.onPointerUp,
         condition: hasPointer && hasTouch,
@@ -135,6 +140,10 @@ class Viewport implements IViewport {
         condition: !disableKeyNavigation && hasKeyDown,
       },
     ])
+  }
+
+  refresh() {
+    this.construct()
   }
 
   private construct() {

@@ -27,6 +27,7 @@ import Sticky from '../Sticky'
 import Observer from '../Observer'
 
 import {
+  getProgress,
   getScrollDiff,
   getLerpScroll,
   setScrollDeltas,
@@ -120,6 +121,7 @@ class Controller implements IController {
 
     const runOrder = ['scrollbar', 'sticky', 'observer']
 
+    if (e === 'refresh' && this.viewport) this.viewport.refresh()
     if (this.content) this.content[e]()
 
     runOrder.forEach((key) => {
@@ -193,6 +195,8 @@ class Controller implements IController {
     this.scroll.limitY = Math.max(0, y)
     this.scroll.scrollX = Math.min(this.scroll.scrollX, this.scroll.limitX)
     this.scroll.scrollY = Math.min(this.scroll.scrollY, this.scroll.limitY)
+    this.scroll.progressX = getProgress(this.scroll.scrollX, this.scroll.limitX)
+    this.scroll.progressY = getProgress(this.scroll.scrollY, this.scroll.limitY)
 
     this.fire('update')
   }

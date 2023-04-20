@@ -1,6 +1,6 @@
 import type { ControllerOptions, Scroll } from '../types'
 
-function getProgress(scroll: number, limit: number) {
+export function getProgress(scroll: number, limit: number) {
   return limit > 0 ? scroll / limit : 0
 }
 

@@ -4,10 +4,12 @@ declare type ViewportBounds = Bounds & {
 };
 export declare type ViewportArgs = {
     element?: HTMLElement | Window | undefined;
+    eventTarget?: HTMLElement | Window | undefined;
 };
 export interface IViewport {
     getBounds: () => ViewportBounds;
     kill: () => void;
+    refresh: () => void;
 }
 export declare type TouchStart = {
     x: number;

@@ -77,6 +77,8 @@ var Controller = /** @class */ (function () {
         if (!events.includes(e))
             return;
         var runOrder = ['scrollbar', 'sticky', 'observer'];
+        if (e === 'refresh' && this.viewport)
+            this.viewport.refresh();
         if (this.content)
             this.content[e]();
         runOrder.forEach(function (key) {
@@ -139,6 +141,8 @@ var Controller = /** @class */ (function () {
         this.scroll.limitY = Math.max(0, y);
         this.scroll.scrollX = Math.min(this.scroll.scrollX, this.scroll.limitX);
         this.scroll.scrollY = Math.min(this.scroll.scrollY, this.scroll.limitY);
+        this.scroll.progressX = (0, functions_1.getProgress)(this.scroll.scrollX, this.scroll.limitX);
+        this.scroll.progressY = (0, functions_1.getProgress)(this.scroll.scrollY, this.scroll.limitY);
         this.fire('update');
     };
     Controller.prototype.scrollTo = function (_a) {

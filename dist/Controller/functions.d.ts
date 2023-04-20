@@ -1,4 +1,5 @@
 import type { ControllerOptions, Scroll } from '../types';
+export declare function getProgress(scroll: number, limit: number): number;
 export declare function setScrollDeltas(x: number | undefined, y: number | undefined, scroll: Scroll): {
     deltaX: number;
     deltaY: number;

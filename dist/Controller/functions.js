@@ -11,10 +11,11 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLerpScroll = exports.getScrollDiff = exports.setScrollToDeltas = exports.setScrollDeltas = void 0;
+exports.getLerpScroll = exports.getScrollDiff = exports.setScrollToDeltas = exports.setScrollDeltas = exports.getProgress = void 0;
 function getProgress(scroll, limit) {
     return limit > 0 ? scroll / limit : 0;
 }
+exports.getProgress = getProgress;
 function lerp(start, end, ease) {
     return (1 - ease) * start + ease * end;
 }

@@ -19,9 +19,10 @@ var applyListeners_1 = __importDefault(require("../utils/applyListeners"));
 var functions_1 = require("./functions");
 var Viewport = /** @class */ (function () {
     function Viewport(controller, _a) {
-        var _b = _a.element, element = _b === void 0 ? window : _b;
+        var _b = _a.element, element = _b === void 0 ? window : _b, eventTarget = _a.eventTarget;
         this.controller = controller;
         this.element = element;
+        this.eventTarget = eventTarget || this.element;
         this.touchStart = {
             x: 0,
             y: 0,
@@ -52,25 +53,28 @@ var Viewport = /** @class */ (function () {
     Viewport.prototype.getBounds = function () {
         return __assign(__assign({}, this.bounds), { viewable: this.viewableBounds });
     };
-    Viewport.prototype.kill = function () {
+    Viewport.prototype.init = function () {
         var _a = this.controller, disableKeyNavigation = _a.options.disableKeyNavigation, _b = _a.browserSupport, hasWheel = _b.hasWheel, hasPointer = _b.hasPointer, hasTouch = _b.hasTouch, hasKeyDown = _b.hasKeyDown;
-        this.controller.viewport = null;
+        this.construct();
         document.body.style.touchAction = 'pinch-zoom';
-        (0, applyListeners_1.default)('remove', [
+        (0, applyListeners_1.default)('add', [
             {
-                element: this.element,
+                element: this.eventTarget,
                 event: 'wheel',
                 fn: this.onWheel,
                 condition: hasWheel,
+                options: {
+                    passive: false,
+                },
             },
             {
-                element: this.element,
+                element: this.eventTarget,
                 event: 'pointerdown',
                 fn: this.onPointerDown,
                 condition: hasPointer && hasTouch,
             },
             {
-                element: this.element,
+                element: this.eventTarget,
                 event: 'pointerup',
                 fn: this.onPointerUp,
                 condition: hasPointer && hasTouch,
@@ -83,28 +87,25 @@ var Viewport = /** @class */ (function () {
             },
         ]);
     };
-    Viewport.prototype.init = function () {
+    Viewport.prototype.kill = function () {
         var _a = this.controller, disableKeyNavigation = _a.options.disableKeyNavigation, _b = _a.browserSupport, hasWheel = _b.hasWheel, hasPointer = _b.hasPointer, hasTouch = _b.hasTouch, hasKeyDown = _b.hasKeyDown;
-        this.construct();
+        this.controller.viewport = null;
         document.body.style.touchAction = 'pinch-zoom';
-        (0, applyListeners_1.default)('add', [
+        (0, applyListeners_1.default)('remove', [
             {
-                element: this.element,
+                element: this.eventTarget,
                 event: 'wheel',
                 fn: this.onWheel,
                 condition: hasWheel,
-                options: {
-                    passive: false,
-                },
             },
             {
-                element: this.element,
+                element: this.eventTarget,
                 event: 'pointerdown',
                 fn: this.onPointerDown,
                 condition: hasPointer && hasTouch,
             },
             {
-                element: this.element,
+                element: this.eventTarget,
                 event: 'pointerup',
                 fn: this.onPointerUp,
                 condition: hasPointer && hasTouch,
@@ -116,6 +117,9 @@ var Viewport = /** @class */ (function () {
                 condition: !disableKeyNavigation && hasKeyDown,
             },
         ]);
+    };
+    Viewport.prototype.refresh = function () {
+        this.construct();
     };
     Viewport.prototype.construct = function () {
         this.bounds = (0, getBounds_1.default)(this.element);
