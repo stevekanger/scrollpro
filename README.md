@@ -275,16 +275,18 @@ Creates the viewport. This initializes the controller and sets the required even
 
 #### Options:
 
-| Option  | Required | Default | Type                  | Description                                                       |
-| ------- | -------- | ------- | --------------------- | ----------------------------------------------------------------- |
-| element | false    | window  | HTMLElement or window | Optional element to use as the viewport for the scroll controller |
+| Option      | Required | Default          | Type                  | Description                                                                                                |
+| ----------- | -------- | ---------------- | --------------------- | ---------------------------------------------------------------------------------------------------------- |
+| element     | false    | window           | HTMLElement or window | Optional element to use as the viewport for the scroll controller                                          |
+| eventTarget | false    | viewport element | HTMLElement or window | This is if you want the virtual scrolling event listeners to listen for something other than the viewport. |
 
 #### Returns:
 
-| value     | type     | Description                         |
-| --------- | -------- | ----------------------------------- |
-| getBounds | function | returns the bounds of the viewport. |
-| kill      | function | kills the viewport.                 |
+| value     | type     | Description                             |
+| --------- | -------- | --------------------------------------- |
+| getBounds | function | returns the bounds of the viewport.     |
+| kill      | function | kills the viewport.                     |
+| refresh   | function | Recalculates the bounds of the viewport |
 
 <br>
 
