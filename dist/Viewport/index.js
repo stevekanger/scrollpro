@@ -54,7 +54,7 @@ var Viewport = /** @class */ (function () {
         return __assign(__assign({}, this.bounds), { viewable: this.viewableBounds });
     };
     Viewport.prototype.init = function () {
-        var _a = this.controller, disableKeyNavigation = _a.options.disableKeyNavigation, _b = _a.browserSupport, hasWheel = _b.hasWheel, hasPointer = _b.hasPointer, hasTouch = _b.hasTouch, hasKeyDown = _b.hasKeyDown;
+        var _a = this.controller, disableKeyNavigation = _a.options.disableKeyNavigation, _b = _a.browserSupport, hasWheel = _b.hasWheel, hasPointer = _b.hasPointer, hasTouch = _b.hasTouch, hasKeyDown = _b.hasKeyDown, hasFonts = _b.hasFonts;
         this.construct();
         document.body.style.touchAction = 'pinch-zoom';
         (0, applyListeners_1.default)('add', [
@@ -85,10 +85,16 @@ var Viewport = /** @class */ (function () {
                 fn: this.onKeyDown,
                 condition: !disableKeyNavigation && hasKeyDown,
             },
+            {
+                element: document.fonts,
+                event: 'loadingdone',
+                fn: this.controller.refresh,
+                condition: hasFonts,
+            },
         ]);
     };
     Viewport.prototype.kill = function () {
-        var _a = this.controller, disableKeyNavigation = _a.options.disableKeyNavigation, _b = _a.browserSupport, hasWheel = _b.hasWheel, hasPointer = _b.hasPointer, hasTouch = _b.hasTouch, hasKeyDown = _b.hasKeyDown;
+        var _a = this.controller, disableKeyNavigation = _a.options.disableKeyNavigation, _b = _a.browserSupport, hasWheel = _b.hasWheel, hasPointer = _b.hasPointer, hasTouch = _b.hasTouch, hasKeyDown = _b.hasKeyDown, hasFonts = _b.hasFonts;
         this.controller.viewport = null;
         document.body.style.touchAction = 'pinch-zoom';
         (0, applyListeners_1.default)('remove', [
@@ -115,6 +121,12 @@ var Viewport = /** @class */ (function () {
                 event: 'keydown',
                 fn: this.onKeyDown,
                 condition: !disableKeyNavigation && hasKeyDown,
+            },
+            {
+                element: document.fonts,
+                event: 'loadingdone',
+                fn: this.controller.refresh,
+                condition: hasFonts,
             },
         ]);
     };

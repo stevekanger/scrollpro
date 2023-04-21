@@ -68,7 +68,7 @@ class Viewport implements IViewport {
   private init() {
     const {
       options: { disableKeyNavigation },
-      browserSupport: { hasWheel, hasPointer, hasTouch, hasKeyDown },
+      browserSupport: { hasWheel, hasPointer, hasTouch, hasKeyDown, hasFonts },
     } = this.controller
 
     this.construct()
@@ -102,13 +102,19 @@ class Viewport implements IViewport {
         fn: this.onKeyDown,
         condition: !disableKeyNavigation && hasKeyDown,
       },
+      {
+        element: document.fonts,
+        event: 'loadingdone',
+        fn: this.controller.refresh,
+        condition: hasFonts,
+      },
     ])
   }
 
   kill() {
     const {
       options: { disableKeyNavigation },
-      browserSupport: { hasWheel, hasPointer, hasTouch, hasKeyDown },
+      browserSupport: { hasWheel, hasPointer, hasTouch, hasKeyDown, hasFonts },
     } = this.controller
 
     this.controller.viewport = null
@@ -138,6 +144,12 @@ class Viewport implements IViewport {
         event: 'keydown',
         fn: this.onKeyDown,
         condition: !disableKeyNavigation && hasKeyDown,
+      },
+      {
+        element: document.fonts,
+        event: 'loadingdone',
+        fn: this.controller.refresh,
+        condition: hasFonts,
       },
     ])
   }

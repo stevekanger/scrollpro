@@ -59,6 +59,7 @@ const viewport = {
       width: 1900,
     },
   },
+  refresh: () => {},
   init: () => {},
   kill: () => {},
   getBounds: function () {

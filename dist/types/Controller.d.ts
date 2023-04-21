@@ -77,4 +77,5 @@ export declare type BrowserSupport = {
     hasPointer: boolean;
     hasKeyDown: boolean;
     isFirefox: boolean;
+    hasFonts: boolean;
 };

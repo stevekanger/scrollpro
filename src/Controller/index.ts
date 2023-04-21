@@ -90,6 +90,7 @@ class Controller implements IController {
       hasPointer: 'PointerEvent' in window,
       hasKeyDown: 'onkeydown' in document,
       isFirefox: navigator.userAgent.indexOf('Firefox') > -1,
+      hasFonts: 'fonts' in document,
     }
 
     this.refresh = this.refresh.bind(this)

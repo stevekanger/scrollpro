@@ -245,7 +245,7 @@ Kills the controller. Removes all event listeners from the viewport and removes 
 
 ### `refresh()`
 
-Recalculates the controller and all items in the controller. Will fire automatically when the window resizes.
+Recalculates the controller and all items in the controller. This will fire automatically when the window resizes and when the documents fonts are loaded.
 
 #### Args: none
 
