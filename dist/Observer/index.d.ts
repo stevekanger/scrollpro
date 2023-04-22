@@ -4,6 +4,7 @@ declare class Observer implements IObserver {
     private element;
     private start;
     private distance;
+    private progress;
     private options;
     private bounds;
     constructor(controller: IController, { element, normalizeInitialView, offsetStart, offsetEnd, start, distance, callback, }: ObserverArgs);

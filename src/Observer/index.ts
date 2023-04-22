@@ -9,19 +9,16 @@ import getBounds from '../utils/getBounds'
 import getOffsetTop from '../utils/getOffsetTop'
 import applyClasses from '../utils/applyClasses'
 import applyTween from '../utils/applyTween'
+import getProgress from '../utils/getProgress'
 
-import {
-  getStart,
-  getDistance,
-  getInInitialView,
-  getProgress,
-} from './functions'
+import { getStart, getDistance, getInInitialView } from './functions'
 
 class Observer implements IObserver {
   private controller: IController
   private element: HTMLElement
   private start: number
   private distance: number
+  private progress: number | null
   private options: ObserverOptions
   private bounds: Bounds
 
@@ -41,6 +38,7 @@ class Observer implements IObserver {
     this.element = element
     this.start = 0
     this.distance = 0
+    this.progress = null
 
     this.options = {
       normalizeInitialView,
@@ -108,7 +106,15 @@ class Observer implements IObserver {
     const { scrollY } = this.controller.scroll
     const { callback } = this.options
     const progress = getProgress(this.start, this.distance, scrollY)
+
+    if (
+      (this.progress === 0 && progress === 0) ||
+      (this.progress === 1 && progress === 1)
+    )
+      return
+
     callback({ element: this.element, progress, applyClasses, applyTween })
+    this.progress = progress
   }
 
   refresh() {

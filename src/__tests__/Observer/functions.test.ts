@@ -6,19 +6,10 @@ import type { Bounds, IViewport, ObserverOptions } from '../../types'
 import {
   getDistance,
   getInInitialView,
-  getProgress,
   getStart,
 } from '../../Observer/functions'
 
 describe('Observer functions', () => {
-  it('getProgress correctly returns the progress', () => {
-    expect(getProgress(200, 400, 199)).toBe(0)
-    expect(getProgress(200, 400, 300)).toBe(0.25)
-    expect(getProgress(200, 400, 400)).toBe(0.5)
-    expect(getProgress(200, 400, 500)).toBe(0.75)
-    expect(getProgress(200, 400, 601)).toBe(1)
-  })
-
   it('getStart correctly returns the start', () => {
     const options = { start: 50, offsetStart: 0 } as ObserverOptions
     const viewportBounds = { viewable: { height: 400 } }

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProgress = exports.getDistance = exports.getStart = exports.getInInitialView = void 0;
+exports.getDistance = exports.getStart = exports.getInInitialView = void 0;
 function getInInitialView(offsetTop, viewBounds) {
     return offsetTop < viewBounds.height;
 }
@@ -24,7 +24,3 @@ function getDistance(offsetTop, inInitialView, options, viewport, bounds) {
     return Math.max(0, viewport.getBounds().viewable.height + bounds.height - totalOffsets);
 }
 exports.getDistance = getDistance;
-function getProgress(start, distance, scrollY) {
-    return Math.min(1, Math.max(0, (scrollY - start) / distance));
-}
-exports.getProgress = getProgress;

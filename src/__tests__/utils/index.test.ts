@@ -8,10 +8,19 @@ import applyListeners from '../../utils/applyListeners'
 import getBounds from '../../utils/getBounds'
 import getComputedStyle from '../../utils/getComputedStyle'
 import getOffsetTop from '../../utils/getOffsetTop'
+import getProgress from '../../utils/getProgress'
 import isElement from '../../utils/isElement'
 import { createTestElement } from '../testUtils'
 
 describe('Utility functions', () => {
+  it('getProgress correctly returns the progress', () => {
+    expect(getProgress(200, 400, 199)).toBe(0)
+    expect(getProgress(200, 400, 300)).toBe(0.25)
+    expect(getProgress(200, 400, 400)).toBe(0.5)
+    expect(getProgress(200, 400, 500)).toBe(0.75)
+    expect(getProgress(200, 400, 601)).toBe(1)
+  })
+
   it('applyTween correctly applies the css to an element', () => {
     const element = createTestElement({ type: 'div' })
     const css = {

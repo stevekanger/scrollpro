@@ -6,6 +6,7 @@ declare class Sticky implements ISticky {
     private bounds;
     private start;
     private distance;
+    private progress;
     constructor(controller: IController, { element, top, bottom, start, distance, ignoreBounds, }: StickyArgs);
     setOptions(options: Partial<StickyOptions>): void;
     private construct;

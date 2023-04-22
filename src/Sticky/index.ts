@@ -5,8 +5,9 @@ import type {
   StickyOptions,
   Bounds,
 } from '../types'
-import getBounds from '../utils/getBounds'
 
+import getBounds from '../utils/getBounds'
+import getProgress from '../utils/getProgress'
 import { getStart, getDistance } from './functions'
 
 class Sticky implements ISticky {
@@ -16,6 +17,7 @@ class Sticky implements ISticky {
   private bounds: Bounds
   private start: number
   private distance: number
+  private progress: number | null
 
   constructor(
     controller: IController,
@@ -32,6 +34,7 @@ class Sticky implements ISticky {
     this.element = element
     this.start = 0
     this.distance = 0
+    this.progress = null
 
     this.options = {
       top,
@@ -92,7 +95,16 @@ class Sticky implements ISticky {
   update() {
     const { scrollY } = this.controller.scroll
     const pos = Math.min(this.distance, Math.max(0, scrollY - this.start))
+    const progress = getProgress(this.start, this.distance, scrollY)
+
+    if (
+      (this.progress === 0 && progress === 0) ||
+      (this.progress === 1 && progress === 1)
+    )
+      return
+
     this.element.style.transform = `translateY(${pos}px)`
+    this.progress = progress
   }
 
   refresh() {

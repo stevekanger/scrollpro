@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = exports.isElement = exports.getOffsetTop = exports.getComputedStyle = exports.getBounds = exports.applyTween = exports.applyListeners = exports.applyClasses = void 0;
+exports.default = exports.isElement = exports.getProgress = exports.getOffsetTop = exports.getComputedStyle = exports.getBounds = exports.applyTween = exports.applyListeners = exports.applyClasses = void 0;
 var applyClasses_1 = require("./utils/applyClasses");
 Object.defineProperty(exports, "applyClasses", { enumerable: true, get: function () { return __importDefault(applyClasses_1).default; } });
 var applyListeners_1 = require("./utils/applyListeners");
@@ -16,6 +16,8 @@ var getComputedStyle_1 = require("./utils/getComputedStyle");
 Object.defineProperty(exports, "getComputedStyle", { enumerable: true, get: function () { return __importDefault(getComputedStyle_1).default; } });
 var getOffsetTop_1 = require("./utils/getOffsetTop");
 Object.defineProperty(exports, "getOffsetTop", { enumerable: true, get: function () { return __importDefault(getOffsetTop_1).default; } });
+var getProgress_1 = require("./utils/getProgress");
+Object.defineProperty(exports, "getProgress", { enumerable: true, get: function () { return __importDefault(getProgress_1).default; } });
 var isElement_1 = require("./utils/isElement");
 Object.defineProperty(exports, "isElement", { enumerable: true, get: function () { return __importDefault(isElement_1).default; } });
 var Controller_1 = require("./Controller");

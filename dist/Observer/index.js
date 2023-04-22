@@ -18,6 +18,7 @@ var getBounds_1 = __importDefault(require("../utils/getBounds"));
 var getOffsetTop_1 = __importDefault(require("../utils/getOffsetTop"));
 var applyClasses_1 = __importDefault(require("../utils/applyClasses"));
 var applyTween_1 = __importDefault(require("../utils/applyTween"));
+var getProgress_1 = __importDefault(require("../utils/getProgress"));
 var functions_1 = require("./functions");
 var Observer = /** @class */ (function () {
     function Observer(controller, _a) {
@@ -26,6 +27,7 @@ var Observer = /** @class */ (function () {
         this.element = element;
         this.start = 0;
         this.distance = 0;
+        this.progress = null;
         this.options = {
             normalizeInitialView: normalizeInitialView,
             offsetStart: offsetStart,
@@ -72,8 +74,12 @@ var Observer = /** @class */ (function () {
     Observer.prototype.update = function () {
         var scrollY = this.controller.scroll.scrollY;
         var callback = this.options.callback;
-        var progress = (0, functions_1.getProgress)(this.start, this.distance, scrollY);
+        var progress = (0, getProgress_1.default)(this.start, this.distance, scrollY);
+        if ((this.progress === 0 && progress === 0) ||
+            (this.progress === 1 && progress === 1))
+            return;
         callback({ element: this.element, progress: progress, applyClasses: applyClasses_1.default, applyTween: applyTween_1.default });
+        this.progress = progress;
     };
     Observer.prototype.refresh = function () {
         this.construct();

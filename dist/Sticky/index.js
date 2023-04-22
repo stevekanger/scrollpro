@@ -15,6 +15,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var getBounds_1 = __importDefault(require("../utils/getBounds"));
+var getProgress_1 = __importDefault(require("../utils/getProgress"));
 var functions_1 = require("./functions");
 var Sticky = /** @class */ (function () {
     function Sticky(controller, _a) {
@@ -23,6 +24,7 @@ var Sticky = /** @class */ (function () {
         this.element = element;
         this.start = 0;
         this.distance = 0;
+        this.progress = null;
         this.options = {
             top: top,
             bottom: bottom,
@@ -63,7 +65,12 @@ var Sticky = /** @class */ (function () {
     Sticky.prototype.update = function () {
         var scrollY = this.controller.scroll.scrollY;
         var pos = Math.min(this.distance, Math.max(0, scrollY - this.start));
+        var progress = (0, getProgress_1.default)(this.start, this.distance, scrollY);
+        if ((this.progress === 0 && progress === 0) ||
+            (this.progress === 1 && progress === 1))
+            return;
         this.element.style.transform = "translateY(".concat(pos, "px)");
+        this.progress = progress;
     };
     Sticky.prototype.refresh = function () {
         this.construct();
