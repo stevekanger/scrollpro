@@ -4,38 +4,13 @@
 
 import type { Bounds, IViewport, ObserverOptions } from '../../types'
 import {
-  applyTween,
-  applyClasses,
   getDistance,
   getInInitialView,
   getProgress,
   getStart,
 } from '../../Observer/functions'
-import { createTestElement } from '../testUtils'
 
 describe('Observer functions', () => {
-  it('applyTween correctly applies the css to an element', () => {
-    const element = createTestElement({ type: 'div' })
-    const css = {
-      transform: 'translate({0, 100}px, {0, 200}px)',
-    }
-    applyTween(element, css, 0.5)
-    expect(element.style.transform).toBe('translate(50px, 100px)')
-    css.transform = 'skew({0, 400})'
-    applyTween(element, css, 0.25)
-    expect(element.style.transform).toBe('skew(100)')
-  })
-
-  it('applyClasses properly applies the classes to the element', () => {
-    const element = createTestElement({ type: 'div' })
-    applyClasses(element, 0)
-    expect(element.classList).toContain('belowViewport')
-    applyClasses(element, 0.5)
-    expect(element.classList).toContain('inViewport')
-    applyClasses(element, 1)
-    expect(element.classList).toContain('aboveViewport')
-  })
-
   it('getProgress correctly returns the progress', () => {
     expect(getProgress(200, 400, 199)).toBe(0)
     expect(getProgress(200, 400, 300)).toBe(0.25)

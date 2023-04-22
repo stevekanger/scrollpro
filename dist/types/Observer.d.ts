@@ -5,9 +5,6 @@ export declare type ObserverArgs = {
     offsetEnd?: number;
     start?: number | undefined;
     distance?: number | undefined;
-    tweenElement?: HTMLElement | undefined;
-    tweenCss?: TweenCss;
-    addClasses?: boolean;
     callback?: ObserverCallback;
 };
 export declare type ObserverOptions = {
@@ -16,9 +13,6 @@ export declare type ObserverOptions = {
     offsetEnd: number;
     start: number | undefined;
     distance: number | undefined;
-    tweenElement: HTMLElement;
-    tweenCss: TweenCss | undefined;
-    addClasses: boolean;
     callback: ObserverCallback;
 };
 export interface IObserver {
@@ -28,11 +22,12 @@ export interface IObserver {
     update: () => void;
     refresh: () => void;
 }
-export declare type TweenCss = {
-    [key: string]: string;
-};
-export declare type ObserverCallback = (e: ObserverEvent) => void;
-export declare type ObserverEvent = {
+export declare type observerEvent = {
+    element: HTMLElement;
     progress: number;
-    inViewport: boolean;
+    applyClasses: (element: HTMLElement, progress: number) => void;
+    applyTween: (element: HTMLElement, progress: number, css: {
+        [key: string]: string;
+    }) => void;
 };
+export declare type ObserverCallback = ({ element, progress, applyClasses, applyTween, }: observerEvent) => void;

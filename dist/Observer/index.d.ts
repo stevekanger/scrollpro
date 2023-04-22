@@ -6,7 +6,7 @@ declare class Observer implements IObserver {
     private distance;
     private options;
     private bounds;
-    constructor(controller: IController, { element, normalizeInitialView, offsetStart, offsetEnd, start, distance, tweenElement, tweenCss, addClasses, callback, }: ObserverArgs);
+    constructor(controller: IController, { element, normalizeInitialView, offsetStart, offsetEnd, start, distance, callback, }: ObserverArgs);
     setOptions(options: Partial<ObserverOptions>): void;
     private construct;
     init(): void;

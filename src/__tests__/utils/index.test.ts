@@ -2,6 +2,8 @@
  * @jest-environment jsdom
  */
 
+import applyTween from '../../utils/applyTween'
+import applyClasses from '../../utils/applyClasses'
 import applyListeners from '../../utils/applyListeners'
 import getBounds from '../../utils/getBounds'
 import getComputedStyle from '../../utils/getComputedStyle'
@@ -10,6 +12,28 @@ import isElement from '../../utils/isElement'
 import { createTestElement } from '../testUtils'
 
 describe('Utility functions', () => {
+  it('applyTween correctly applies the css to an element', () => {
+    const element = createTestElement({ type: 'div' })
+    const css = {
+      transform: 'translate({0, 100}px, {0, 200}px)',
+    }
+    applyTween(element, 0.5, css)
+    expect(element.style.transform).toBe('translate(50px, 100px)')
+    css.transform = 'skew({0, 400})'
+    applyTween(element, 0.25, css)
+    expect(element.style.transform).toBe('skew(100)')
+  })
+
+  it('applyClasses properly applies the classes to the element', () => {
+    const element = createTestElement({ type: 'div' })
+    applyClasses(element, 0)
+    expect(element.classList).toContain('belowViewport')
+    applyClasses(element, 0.5)
+    expect(element.classList).toContain('inViewport')
+    applyClasses(element, 1)
+    expect(element.classList).toContain('aboveViewport')
+  })
+
   it('applylisteners correctly adds/removes a listener', () => {
     let n: number = 69
     let fn = () => (n += 351)

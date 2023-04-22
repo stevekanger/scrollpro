@@ -7,12 +7,12 @@ import type {
 } from '../types'
 import getBounds from '../utils/getBounds'
 import getOffsetTop from '../utils/getOffsetTop'
+import applyClasses from '../utils/applyClasses'
+import applyTween from '../utils/applyTween'
 
 import {
-  applyTween,
   getStart,
   getDistance,
-  applyClasses,
   getInInitialView,
   getProgress,
 } from './functions'
@@ -34,9 +34,6 @@ class Observer implements IObserver {
       offsetEnd = 0,
       start,
       distance,
-      tweenElement,
-      tweenCss,
-      addClasses = false,
       callback = () => {},
     }: ObserverArgs
   ) {
@@ -51,9 +48,6 @@ class Observer implements IObserver {
       offsetEnd,
       start,
       distance,
-      tweenElement: tweenElement || this.element,
-      tweenCss,
-      addClasses,
       callback,
     }
 
@@ -81,8 +75,9 @@ class Observer implements IObserver {
 
     if (!viewport) return
 
-    const { tweenCss, tweenElement } = this.options
-    if (tweenCss) applyTween(tweenElement, tweenCss, 0)
+    const { callback } = this.options
+    callback({ element: this.element, progress: 0, applyClasses, applyTween })
+
     this.bounds = getBounds(this.element)
     const viewBounds = viewport.getBounds().viewable
     const { scrollY } = this.controller.scroll
@@ -111,17 +106,9 @@ class Observer implements IObserver {
 
   update() {
     const { scrollY } = this.controller.scroll
-    const { tweenCss, tweenElement, addClasses, callback } = this.options
-
+    const { callback } = this.options
     const progress = getProgress(this.start, this.distance, scrollY)
-    const inViewport = progress > 0 && progress < 1
-
-    if (tweenCss) applyTween(tweenElement, tweenCss, progress)
-    if (addClasses) applyClasses(this.element, progress)
-
-    if (callback && typeof callback === 'function') {
-      callback({ progress, inViewport })
-    }
+    callback({ element: this.element, progress, applyClasses, applyTween })
   }
 
   refresh() {

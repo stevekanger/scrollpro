@@ -6,8 +6,8 @@ import type {
   Bounds,
   IController,
   IObserver,
-  ObserverEvent,
   ObserverOptions,
+  observerEvent,
 } from '../../types'
 import { createTestElement } from '../testUtils'
 import Controller from '../../Controller'
@@ -45,22 +45,15 @@ const element = createTestElement({
   rect: bounds,
 })
 
-let observerEvent = {
-  progress: 0,
-  inViewport: false,
-} as ObserverEvent
+let observerProgress = 0
 
-function callback(e: ObserverEvent) {
-  observerEvent = e
-  console.log(e)
+function callback({ progress }: observerEvent) {
+  observerProgress = progress
 }
 
 const obs = ctl.createObserver({
   element,
   callback,
-  tweenCss: {
-    transform: 'translateX({0, 100}px)',
-  },
 }) as IObserver & {
   controller: IController
   bounds: Bounds
@@ -83,24 +76,15 @@ describe('Observer class', () => {
   it('correctly updates the observer', () => {
     obs.controller.scroll.scrollY = 994
     obs.update()
-    expect(observerEvent).toEqual({
-      inViewport: false,
-      progress: 0,
-    })
+    expect(observerProgress).toBe(0)
 
     obs.controller.scroll.scrollY = 1540
     obs.update()
-    expect(observerEvent).toEqual({
-      inViewport: true,
-      progress: 0.5,
-    })
+    expect(observerProgress).toBe(0.5)
 
     obs.controller.scroll.scrollY = 2085
     obs.update()
-    expect(observerEvent).toEqual({
-      inViewport: false,
-      progress: 1,
-    })
+    expect(observerProgress).toBe(1)
   })
 
   it('correctly sets the options', () => {
@@ -112,11 +96,6 @@ describe('Observer class', () => {
       start: 200,
       distance: undefined,
       callback,
-      tweenElement: element,
-      addClasses: false,
-      tweenCss: {
-        transform: 'translateX({0, 100}px)',
-      },
     })
   })
 
