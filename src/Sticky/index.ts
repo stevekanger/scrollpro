@@ -17,7 +17,7 @@ class Sticky implements ISticky {
   private bounds: Bounds
   private start: number
   private distance: number
-  private progress: number | null
+  private progress: number | undefined
 
   constructor(
     controller: IController,
@@ -34,7 +34,7 @@ class Sticky implements ISticky {
     this.element = element
     this.start = 0
     this.distance = 0
-    this.progress = null
+    this.progress = undefined
 
     this.options = {
       top,
@@ -68,6 +68,7 @@ class Sticky implements ISticky {
 
     if (!viewport) return
 
+    this.progress = undefined
     this.element.style.transform = 'translateY(0)'
     this.bounds = getBounds(this.element)
 

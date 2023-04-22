@@ -2,7 +2,7 @@
 
 Smooth momentum scrolling library
 
-<small>Disclaimer: As of now nested instances partial support. Nested scrollbars may not work as intended.</small>
+<small>Disclaimer: As of now nested instances has partial support. Nested scrollbars may not work as intended.</small>
 
 ## Installation
 
@@ -531,7 +531,7 @@ const observer = ctl.createObserver({
 
 ### Observer Callback Event
 
-| Option      | Type        | Description                                                                     |
+| Value       | Type        | Description                                                                     |
 | ----------- | ----------- | ------------------------------------------------------------------------------- |
 | element     | HTMLElement | This is the element being observed.                                             |
 | progress    | number      | This is the current progress of the element through the viewport from 0 to 1.   |

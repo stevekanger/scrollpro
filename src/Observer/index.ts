@@ -18,7 +18,7 @@ class Observer implements IObserver {
   private element: HTMLElement
   private start: number
   private distance: number
-  private progress: number | null
+  private progress: number | undefined
   private options: ObserverOptions
   private bounds: Bounds
 
@@ -38,7 +38,7 @@ class Observer implements IObserver {
     this.element = element
     this.start = 0
     this.distance = 0
-    this.progress = null
+    this.progress = undefined
 
     this.options = {
       normalizeInitialView,
@@ -73,6 +73,7 @@ class Observer implements IObserver {
 
     if (!viewport) return
 
+    this.progress = undefined
     const { callback } = this.options
     callback({ element: this.element, progress: 0, applyClasses, applyTween })
 
