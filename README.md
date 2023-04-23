@@ -376,7 +376,7 @@ Creates as scrollbar inside of an html element.
 
 Syntax: `contorller.createObserver({Options})`
 
-Creates an observer for an html element. This will observe the elements place in the scroll relative to the viewport.
+Creates an observer for an html element. This will observe the elements place in the scroll relative to the viewport. <b>Avoid placing observers inside of sticky elements or other observers.</b>
 
 #### Args:
 

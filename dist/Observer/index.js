@@ -27,7 +27,7 @@ var Observer = /** @class */ (function () {
         this.element = element;
         this.start = 0;
         this.distance = 0;
-        this.progress = null;
+        this.progress = undefined;
         this.options = {
             normalizeInitialView: normalizeInitialView,
             offsetStart: offsetStart,
@@ -53,6 +53,7 @@ var Observer = /** @class */ (function () {
         var viewport = this.controller.viewport;
         if (!viewport)
             return;
+        this.progress = undefined;
         var callback = this.options.callback;
         callback({ element: this.element, progress: 0, applyClasses: applyClasses_1.default, applyTween: applyTween_1.default });
         this.bounds = (0, getBounds_1.default)(this.element);

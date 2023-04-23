@@ -24,7 +24,7 @@ var Sticky = /** @class */ (function () {
         this.element = element;
         this.start = 0;
         this.distance = 0;
-        this.progress = null;
+        this.progress = undefined;
         this.options = {
             top: top,
             bottom: bottom,
@@ -49,6 +49,7 @@ var Sticky = /** @class */ (function () {
         var viewport = this.controller.viewport;
         if (!viewport)
             return;
+        this.progress = undefined;
         this.element.style.transform = 'translateY(0)';
         this.bounds = (0, getBounds_1.default)(this.element);
         this.start = (0, functions_1.getStart)(this.controller.scroll.scrollY, viewport, this.options, this.bounds);
