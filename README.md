@@ -353,12 +353,12 @@ Creates as scrollbar inside of an html element.
 
 #### Options:
 
-| Option       | Required | Default    | Type        | Description                                                                                             |
-| ------------ | -------- | ---------- | ----------- | ------------------------------------------------------------------------------------------------------- |
-| element      | true     | null       | HTMLElement | Element to use as the scrollbar wrapper.                                                                |
-| axis         | false    | 'y'        | string      | This is the axis you want to use as the basis for the scrollbar. 'y' is scrollY and 'x' is scrollX.     |
-| orientation  | false    | 'vertical' | string      | This is which direction your scrollbar is oriented. Top to bottom 'vertical'. Side to side 'horizontal' |
-| useAnimation | false    | true       | boolean     | This is whether or not you want your scrollbar to use the same scrolling animation as the scroll uses.  |
+| Option      | Required | Default    | Type        | Description                                                                                                |
+| ----------- | -------- | ---------- | ----------- | ---------------------------------------------------------------------------------------------------------- |
+| element     | true     | null       | HTMLElement | Element to use as the scrollbar wrapper.                                                                   |
+| axis        | false    | 'y'        | string      | This is the axis you want to use as the basis for the scrollbar. 'y' is scrollY and 'x' is scrollX.        |
+| orientation | false    | 'vertical' | string      | This is which direction your scrollbar is oriented. Top to bottom 'vertical'. Side to side 'horizontal'    |
+| useEasing   | false    | true       | boolean     | This is whether or not you want your scrollbar to use the same scrolling easing effect as the scroll uses. |
 
 #### Returns:
 
@@ -458,11 +458,11 @@ Allows you to scroll to a specific part of the page.
 
 #### Options:
 
-| Option       | Required | Default   | Type    | Description                                            |
-| ------------ | -------- | --------- | ------- | ------------------------------------------------------ |
-| x            | false    | undefined | number  | Sets the x axis scroll                                 |
-| y            | false    | undefined | number  | Sets the y axis scroll                                 |
-| useAnimation | false    | true      | boolean | Whether or not you want to use the animation to scroll |
+| Option | Required | Default   | Type              | Description                                                                                                                                                                                                                                                                                                                                             |
+| ------ | -------- | --------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| x      | false    | undefined | number            | Sets the x axis scroll                                                                                                                                                                                                                                                                                                                                  |
+| y      | false    | undefined | number            | Sets the y axis scroll                                                                                                                                                                                                                                                                                                                                  |
+| ease   | false    | true      | boolean or number | Whether or not you want to use easing when calling this method. You can set this to true, false, or an easing value from 0 - 1 and will be used instead of the Controllers easing value. This is handy if you want to speed up or slow down the easing effect when calling the `scrollTo()` method. Think of this as the duration of the scroll effect. |
 
 #### Returns: undefined
 

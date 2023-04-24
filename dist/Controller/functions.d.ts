@@ -1,4 +1,4 @@
-import type { ControllerOptions, Scroll } from '../types';
+import type { Scroll } from '../types';
 export declare function getProgress(scroll: number, limit: number): number;
 export declare function setScrollDeltas(x: number | undefined, y: number | undefined, scroll: Scroll): {
     deltaX: number;
@@ -24,7 +24,7 @@ export declare function getScrollDiff(scroll: Scroll): {
     diffX: number;
     diffY: number;
 };
-export declare function getLerpScroll(scroll: Scroll, options: ControllerOptions): {
+export declare function getLerpScroll(scroll: Scroll, ease: number): {
     scrollX: number;
     scrollY: number;
     progressX: number;

@@ -1,10 +1,8 @@
-import type { Bounds } from './shared'
-
 export type ScrollbarArgs = {
   element: HTMLElement
   axis?: string
   orientation?: string
-  useAnimation?: boolean
+  useEasing?: boolean
 }
 
 export interface IScrollbar {
@@ -18,5 +16,5 @@ export interface IScrollbar {
 export type ScrollbarOptions = {
   axis: string
   orientation: string
-  useAnimation: boolean
+  useEasing: boolean
 }

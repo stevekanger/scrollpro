@@ -6,7 +6,7 @@ declare class Scrollbar implements IScrollbar {
     private track;
     private thumb;
     private options;
-    constructor(controller: IController, { element, axis, orientation, useAnimation, }: ScrollbarArgs);
+    constructor(controller: IController, { element, axis, orientation, useEasing, }: ScrollbarArgs);
     setOptions(options: Partial<ScrollbarOptions>): void;
     init(): void;
     kill(): void;

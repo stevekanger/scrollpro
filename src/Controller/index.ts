@@ -202,7 +202,7 @@ class Controller implements IController {
     this.fire('update')
   }
 
-  scrollTo({ x, y, animate = true }: ScrollToArgs) {
+  scrollTo({ x, y, ease = true }: ScrollToArgs) {
     if (this.aF) {
       cancelAnimationFrame(this.aF)
       this.aF = null
@@ -217,8 +217,10 @@ class Controller implements IController {
       return
     }
 
-    if (animate) {
-      this.aF = requestAnimationFrame(this.animateScroll)
+    if (ease) {
+      this.aF = requestAnimationFrame(() =>
+        this.animateScroll(typeof ease === 'number' ? ease : this.options.ease)
+      )
       return
     }
 
@@ -226,12 +228,12 @@ class Controller implements IController {
     this.fire('update')
   }
 
-  private animateScroll() {
+  private animateScroll(ease: number) {
     const { diffX, diffY } = getScrollDiff(this.scroll)
 
     if (Math.abs(diffX) > 0.2 || Math.abs(diffY) > 0.2) {
-      this.scroll = getLerpScroll(this.scroll, this.options)
-      this.aF = requestAnimationFrame(this.animateScroll)
+      this.scroll = getLerpScroll(this.scroll, ease)
+      this.aF = requestAnimationFrame(() => this.animateScroll(ease))
     } else {
       if (this.aF) cancelAnimationFrame(this.aF)
       this.aF = null

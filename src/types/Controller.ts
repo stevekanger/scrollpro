@@ -75,7 +75,7 @@ export type ControllerEvents = {
 export type ScrollToArgs = {
   x?: number
   y?: number
-  animate?: boolean
+  ease?: boolean | number
 }
 
 export type BrowserSupport = {

@@ -18,7 +18,7 @@ class Scrollbar implements IScrollbar {
   private options: {
     axis: string
     orientation: string
-    useAnimation: boolean
+    useEasing: boolean
   }
 
   constructor(
@@ -27,7 +27,7 @@ class Scrollbar implements IScrollbar {
       element,
       axis = 'y',
       orientation = 'vertical',
-      useAnimation = true,
+      useEasing = true,
     }: ScrollbarArgs
   ) {
     this.controller = controller
@@ -38,7 +38,7 @@ class Scrollbar implements IScrollbar {
     this.options = {
       axis,
       orientation,
-      useAnimation,
+      useEasing,
     }
 
     this.bounds = {
@@ -163,7 +163,7 @@ class Scrollbar implements IScrollbar {
 
   private onPointerMove(e: PointerEvent) {
     let { deltaX, deltaY, limitX, limitY } = this.controller.scroll
-    const { axis, orientation, useAnimation } = this.options
+    const { axis, orientation, useEasing } = this.options
 
     const limit = axis === 'y' ? limitY : limitX
 
@@ -181,7 +181,7 @@ class Scrollbar implements IScrollbar {
       this.controller.scrollTo({
         x: deltaX,
         y: pos,
-        animate: useAnimation,
+        ease: useEasing,
       })
       return
     }
@@ -189,7 +189,7 @@ class Scrollbar implements IScrollbar {
     this.controller.scrollTo({
       x: pos,
       y: deltaY,
-      animate: useAnimation,
+      ease: useEasing,
     })
   }
 
@@ -201,7 +201,7 @@ class Scrollbar implements IScrollbar {
       options: { firefoxMult, mouseMult },
     } = this.controller
 
-    const { useAnimation } = this.options
+    const { useEasing } = this.options
 
     let dx = -e.deltaX
     let dy = -e.deltaY
@@ -217,7 +217,7 @@ class Scrollbar implements IScrollbar {
     this.controller.scrollTo({
       x: deltaX - dx,
       y: deltaY - dy,
-      animate: useAnimation,
+      ease: useEasing,
     })
   }
 }

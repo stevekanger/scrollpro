@@ -45,9 +45,9 @@ function getScrollDiff(scroll) {
     };
 }
 exports.getScrollDiff = getScrollDiff;
-function getLerpScroll(scroll, options) {
-    var scrollX = lerp(scroll.scrollX, scroll.deltaX, options.ease);
-    var scrollY = lerp(scroll.scrollY, scroll.deltaY, options.ease);
+function getLerpScroll(scroll, ease) {
+    var scrollX = lerp(scroll.scrollX, scroll.deltaX, ease);
+    var scrollY = lerp(scroll.scrollY, scroll.deltaY, ease);
     var progressX = getProgress(scroll.scrollX, scroll.limitX);
     var progressY = getProgress(scroll.scrollY, scroll.limitY);
     return __assign(__assign({}, scroll), { scrollX: scrollX, scrollY: scrollY, progressX: progressX, progressY: progressY });

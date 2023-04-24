@@ -69,7 +69,7 @@ export declare type ControllerEvents = {
 export declare type ScrollToArgs = {
     x?: number;
     y?: number;
-    animate?: boolean;
+    ease?: boolean | number;
 };
 export declare type BrowserSupport = {
     hasWheel: boolean;

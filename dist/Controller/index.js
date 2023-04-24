@@ -147,25 +147,32 @@ var Controller = /** @class */ (function () {
         this.fire('update');
     };
     Controller.prototype.scrollTo = function (_a) {
-        var x = _a.x, y = _a.y, _b = _a.animate, animate = _b === void 0 ? true : _b;
+        var _this = this;
+        var x = _a.x, y = _a.y, _b = _a.ease, ease = _b === void 0 ? true : _b;
+        if (this.aF) {
+            cancelAnimationFrame(this.aF);
+            this.aF = null;
+        }
         this.scroll = (0, functions_1.setScrollDeltas)(x, y, this.scroll);
-        if ((this.scroll.deltaX === this.scroll.scrollX &&
-            this.scroll.deltaY === this.scroll.scrollY) ||
-            this.aF) {
+        if (this.scroll.deltaX === this.scroll.scrollX &&
+            this.scroll.deltaY === this.scroll.scrollY) {
             return;
         }
-        if (animate) {
-            this.aF = requestAnimationFrame(this.animateScroll);
+        if (ease) {
+            this.aF = requestAnimationFrame(function () {
+                return _this.animateScroll(typeof ease === 'number' ? ease : _this.options.ease);
+            });
             return;
         }
         this.scroll = (0, functions_1.setScrollToDeltas)(this.scroll);
         this.fire('update');
     };
-    Controller.prototype.animateScroll = function () {
+    Controller.prototype.animateScroll = function (ease) {
+        var _this = this;
         var _a = (0, functions_1.getScrollDiff)(this.scroll), diffX = _a.diffX, diffY = _a.diffY;
         if (Math.abs(diffX) > 0.2 || Math.abs(diffY) > 0.2) {
-            this.scroll = (0, functions_1.getLerpScroll)(this.scroll, this.options);
-            this.aF = requestAnimationFrame(this.animateScroll);
+            this.scroll = (0, functions_1.getLerpScroll)(this.scroll, ease);
+            this.aF = requestAnimationFrame(function () { return _this.animateScroll(ease); });
         }
         else {
             if (this.aF)

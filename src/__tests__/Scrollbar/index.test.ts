@@ -65,11 +65,11 @@ describe('Scrollbar class', () => {
   it('Correctly sets the options', () => {
     scrollbar.setOptions({
       axis: 'x',
-      useAnimation: true,
+      useEasing: true,
     })
     expect(scrollbar.options).toEqual({
       axis: 'x',
-      useAnimation: true,
+      useEasing: true,
       orientation: 'vertical',
     })
   })

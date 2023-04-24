@@ -2,7 +2,7 @@ export declare type ScrollbarArgs = {
     element: HTMLElement;
     axis?: string;
     orientation?: string;
-    useAnimation?: boolean;
+    useEasing?: boolean;
 };
 export interface IScrollbar {
     setOptions: (options: Partial<ScrollbarOptions>) => void;
@@ -14,5 +14,5 @@ export interface IScrollbar {
 export declare type ScrollbarOptions = {
     axis: string;
     orientation: string;
-    useAnimation: boolean;
+    useEasing: boolean;
 };

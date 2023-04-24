@@ -26,7 +26,7 @@ declare class Controller implements IController {
         x?: number | undefined;
         y?: number | undefined;
     }): void;
-    scrollTo({ x, y, animate }: ScrollToArgs): void;
+    scrollTo({ x, y, ease }: ScrollToArgs): void;
     private animateScroll;
 }
 export default Controller;

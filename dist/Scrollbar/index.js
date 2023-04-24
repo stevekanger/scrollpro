@@ -19,7 +19,7 @@ var functions_1 = require("./functions");
 var applyListeners_1 = __importDefault(require("../utils/applyListeners"));
 var Scrollbar = /** @class */ (function () {
     function Scrollbar(controller, _a) {
-        var element = _a.element, _b = _a.axis, axis = _b === void 0 ? 'y' : _b, _c = _a.orientation, orientation = _c === void 0 ? 'vertical' : _c, _d = _a.useAnimation, useAnimation = _d === void 0 ? true : _d;
+        var element = _a.element, _b = _a.axis, axis = _b === void 0 ? 'y' : _b, _c = _a.orientation, orientation = _c === void 0 ? 'vertical' : _c, _d = _a.useEasing, useEasing = _d === void 0 ? true : _d;
         this.controller = controller;
         this.element = element;
         this.track = document.createElement('div');
@@ -27,7 +27,7 @@ var Scrollbar = /** @class */ (function () {
         this.options = {
             axis: axis,
             orientation: orientation,
-            useAnimation: useAnimation,
+            useEasing: useEasing,
         };
         this.bounds = {
             left: 0,
@@ -135,7 +135,7 @@ var Scrollbar = /** @class */ (function () {
     };
     Scrollbar.prototype.onPointerMove = function (e) {
         var _a = this.controller.scroll, deltaX = _a.deltaX, deltaY = _a.deltaY, limitX = _a.limitX, limitY = _a.limitY;
-        var _b = this.options, axis = _b.axis, orientation = _b.orientation, useAnimation = _b.useAnimation;
+        var _b = this.options, axis = _b.axis, orientation = _b.orientation, useEasing = _b.useEasing;
         var limit = axis === 'y' ? limitY : limitX;
         if (limit === Infinity || limit <= 0)
             return;
@@ -150,21 +150,21 @@ var Scrollbar = /** @class */ (function () {
             this.controller.scrollTo({
                 x: deltaX,
                 y: pos,
-                animate: useAnimation,
+                ease: useEasing,
             });
             return;
         }
         this.controller.scrollTo({
             x: pos,
             y: deltaY,
-            animate: useAnimation,
+            ease: useEasing,
         });
     };
     Scrollbar.prototype.onWheel = function (e) {
         e.preventDefault();
         e.stopPropagation();
         var _a = this.controller, _b = _a.scroll, deltaX = _b.deltaX, deltaY = _b.deltaY, _c = _a.options, firefoxMult = _c.firefoxMult, mouseMult = _c.mouseMult;
-        var useAnimation = this.options.useAnimation;
+        var useEasing = this.options.useEasing;
         var dx = -e.deltaX;
         var dy = -e.deltaY;
         if (navigator.userAgent.indexOf('Firefox') > -1 && e.deltaMode === 1) {
@@ -176,7 +176,7 @@ var Scrollbar = /** @class */ (function () {
         this.controller.scrollTo({
             x: deltaX - dx,
             y: deltaY - dy,
-            animate: useAnimation,
+            ease: useEasing,
         });
     };
     return Scrollbar;

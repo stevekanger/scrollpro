@@ -49,9 +49,9 @@ export function getScrollDiff(scroll: Scroll) {
   }
 }
 
-export function getLerpScroll(scroll: Scroll, options: ControllerOptions) {
-  const scrollX = lerp(scroll.scrollX, scroll.deltaX, options.ease)
-  const scrollY = lerp(scroll.scrollY, scroll.deltaY, options.ease)
+export function getLerpScroll(scroll: Scroll, ease: number) {
+  const scrollX = lerp(scroll.scrollX, scroll.deltaX, ease)
+  const scrollY = lerp(scroll.scrollY, scroll.deltaY, ease)
   const progressX = getProgress(scroll.scrollX, scroll.limitX)
   const progressY = getProgress(scroll.scrollY, scroll.limitY)
 
