@@ -203,12 +203,16 @@ class Controller implements IController {
   }
 
   scrollTo({ x, y, animate = true }: ScrollToArgs) {
+    if (this.aF) {
+      cancelAnimationFrame(this.aF)
+      this.aF = null
+    }
+
     this.scroll = setScrollDeltas(x, y, this.scroll)
 
     if (
-      (this.scroll.deltaX === this.scroll.scrollX &&
-        this.scroll.deltaY === this.scroll.scrollY) ||
-      this.aF
+      this.scroll.deltaX === this.scroll.scrollX &&
+      this.scroll.deltaY === this.scroll.scrollY
     ) {
       return
     }

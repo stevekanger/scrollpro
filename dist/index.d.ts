@@ -1,3 +1,9 @@
+export { default as Controller } from './Controller';
+export { default as Viewport } from './Viewport';
+export { default as Content } from './Content';
+export { default as Scrollbar } from './Scrollbar';
+export { default as Observer } from './Observer';
+export { default as Sticky } from './Sticky';
 export { default as applyClasses } from './utils/applyClasses';
 export { default as applyListeners } from './utils/applyListeners';
 export { default as applyTween } from './utils/applyTween';
