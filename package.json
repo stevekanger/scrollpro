@@ -1,6 +1,6 @@
 {
   "name": "scrollpro",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Smooth momentum scrolling and parallax library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

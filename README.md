@@ -1,6 +1,6 @@
 # ScrollPro
 
-Smooth momentum scrolling library
+Smooth momentum scrolling library. Check it out in action. <a href="https://scrollpro.stevekanger.com">ScrollPro Example</a>
 
 <small>Disclaimer: As of now nested instances has partial support. Nested scrollbars may not work as intended.</small>
 
