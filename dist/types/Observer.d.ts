@@ -22,7 +22,7 @@ export interface IObserver {
     update: () => void;
     refresh: () => void;
 }
-export declare type observerEvent = {
+export declare type ObserverEvent = {
     element: HTMLElement;
     progress: number;
     applyClasses: (element: HTMLElement, progress: number) => void;
@@ -30,4 +30,4 @@ export declare type observerEvent = {
         [key: string]: string;
     }) => void;
 };
-export declare type ObserverCallback = ({ element, progress, applyClasses, applyTween, }: observerEvent) => void;
+export declare type ObserverCallback = ({ element, progress, applyClasses, applyTween, }: ObserverEvent) => void;

@@ -25,7 +25,7 @@ export interface IObserver {
   refresh: () => void
 }
 
-export type observerEvent = {
+export type ObserverEvent = {
   element: HTMLElement
   progress: number
   applyClasses: (element: HTMLElement, progress: number) => void
@@ -43,4 +43,4 @@ export type ObserverCallback = ({
   progress,
   applyClasses,
   applyTween,
-}: observerEvent) => void
+}: ObserverEvent) => void
