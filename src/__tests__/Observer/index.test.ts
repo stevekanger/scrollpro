@@ -7,7 +7,7 @@ import type {
   IController,
   IObserver,
   ObserverOptions,
-  observerEvent,
+  ObserverEvent,
 } from '../../types'
 import { createTestElement } from '../testUtils'
 import Controller from '../../Controller'
@@ -47,7 +47,7 @@ const element = createTestElement({
 
 let observerProgress = 0
 
-function callback({ progress }: observerEvent) {
+function callback({ progress }: ObserverEvent) {
   observerProgress = progress
 }
 
