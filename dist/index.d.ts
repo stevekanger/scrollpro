@@ -1,3 +1,4 @@
+export * from './types';
 export { default as Controller } from './Controller';
 export { default as Viewport } from './Viewport';
 export { default as Content } from './Content';
