@@ -108,10 +108,11 @@ var Controller = /** @class */ (function () {
         if (this.viewport) {
             throw new Error('You already have viewport initialized for this controller. Please kill the previous viewport before initializing another content instance.');
         }
-        this.viewport = new Viewport_1.default(this, __assign({}, args));
+        var viewport = new Viewport_1.default(this, __assign({}, args));
+        this.viewport = viewport;
         this.fire('init');
         window.addEventListener('resize', this.refresh);
-        return this.viewport;
+        return viewport;
     };
     Controller.prototype.createContent = function (args) {
         if (this.content) {

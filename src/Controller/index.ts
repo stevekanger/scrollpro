@@ -156,10 +156,11 @@ class Controller implements IController {
         'You already have viewport initialized for this controller. Please kill the previous viewport before initializing another content instance.'
       )
     }
-    this.viewport = new Viewport(this, { ...args })
+    const viewport: IViewport = new Viewport(this, { ...args })
+    this.viewport = viewport
     this.fire('init')
     window.addEventListener('resize', this.refresh)
-    return this.viewport
+    return viewport
   }
 
   createContent(args: ContentArgs) {
