@@ -48,12 +48,14 @@ var Controller = /** @class */ (function () {
             progressY: 0,
         };
         this.browserSupport = {
-            hasWheel: 'onwheel' in document,
-            hasTouch: 'ontouchstart' in document,
-            hasPointer: 'PointerEvent' in window,
-            hasKeyDown: 'onkeydown' in document,
-            isFirefox: navigator.userAgent.indexOf('Firefox') > -1,
-            hasFonts: 'fonts' in document,
+            hasWheel: typeof document !== 'undefined' ? 'onwheel' in document : false,
+            hasTouch: typeof document !== 'undefined' ? 'ontouchstart' in document : false,
+            hasPointer: typeof window !== 'undefined' ? 'PointerEvent' in window : false,
+            hasKeyDown: typeof document !== 'undefined' ? 'onkeydown' in document : false,
+            isFirefox: typeof navigator !== 'undefined'
+                ? navigator.userAgent.indexOf('Firefox') > -1
+                : false,
+            hasFonts: typeof document !== 'undefined' ? 'fonts' in document : false,
         };
         this.refresh = this.refresh.bind(this);
         this.animateScroll = this.animateScroll.bind(this);
