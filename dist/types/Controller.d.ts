@@ -59,7 +59,7 @@ export declare type ControllerOptions = {
     mouseMult: number;
     ease: number;
 };
-export declare type EventFn = (e?: Scroll) => void;
+export declare type EventFn = (e: Scroll) => void;
 export declare type ControllerEvents = {
     init: Set<EventFn>;
     kill: Set<EventFn>;
