@@ -13,7 +13,7 @@ function applyListeners(type: 'add' | 'remove', listeners: Listeners) {
     if (!listener.condition) return
 
     if (type === 'add') {
-      listener.element.addEventListener(
+      listener.element?.addEventListener(
         listener.event,
         listener.fn,
         listener.options || {}
@@ -21,7 +21,7 @@ function applyListeners(type: 'add' | 'remove', listeners: Listeners) {
       return
     }
 
-    listener.element.removeEventListener(
+    listener.element?.removeEventListener(
       listener.event,
       listener.fn,
       listener.options || {}

@@ -1,4 +1,4 @@
-import { Bounds, Data } from './shared'
+import { Bounds } from './shared'
 
 type ViewportBounds = Bounds & { viewable: Bounds }
 

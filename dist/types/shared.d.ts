@@ -10,7 +10,3 @@ export declare type Action = {
     type: string;
     payload?: any;
 };
-export interface Data<DataType> {
-    get: () => DataType;
-    set: (type: string, payload?: any) => void;
-}
