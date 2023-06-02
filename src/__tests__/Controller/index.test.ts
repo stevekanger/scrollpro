@@ -5,7 +5,7 @@
 import Controller from '../../Controller'
 import { createTestElement, waitForScroll } from '../testUtils'
 
-const ctl = new Controller()
+const ctl = new Controller({ touchMult: 5 })
 
 beforeEach(() => {
   ctl.scroll = {
@@ -122,6 +122,10 @@ describe('Controller class', () => {
     expect(ctl['items'].sticky).toContain(sticky)
   })
 
+  it('Correctly handles initializing with an option', () => {
+    expect(ctl.options.touchMult).toBe(5)
+  })
+
   it('Correctly handles setting the options', () => {
     ctl.setOptions({
       disableKeyNavigation: true,
@@ -131,7 +135,7 @@ describe('Controller class', () => {
       keyStep: 120,
       disableKeyNavigation: true,
       firefoxMult: 15,
-      touchMult: 2,
+      touchMult: 5,
       mouseMult: 1,
     })
   })

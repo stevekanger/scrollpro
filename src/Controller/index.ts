@@ -57,13 +57,13 @@ class Controller implements IController {
     }
 
     this.options = {
-      ...options,
       ease: 0.1,
       keyStep: 120,
       disableKeyNavigation: false,
       firefoxMult: 15,
       touchMult: 2,
       mouseMult: 1,
+      ...options,
     }
 
     this.listeners = {

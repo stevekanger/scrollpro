@@ -30,7 +30,7 @@ var Controller = /** @class */ (function () {
             scrollbar: new Set(),
             observer: new Set(),
         };
-        this.options = __assign(__assign({}, options), { ease: 0.1, keyStep: 120, disableKeyNavigation: false, firefoxMult: 15, touchMult: 2, mouseMult: 1 });
+        this.options = __assign({ ease: 0.1, keyStep: 120, disableKeyNavigation: false, firefoxMult: 15, touchMult: 2, mouseMult: 1 }, options);
         this.listeners = {
             init: new Set(),
             kill: new Set(),
