@@ -23,3 +23,11 @@ export interface Scroll {
   on: EventListeners<ScrollEventsData>['on']
   off: EventListeners<ScrollEventsData>['off']
 }
+
+export type AnimationFrame = ReturnType<typeof requestAnimationFrame> | null
+
+export interface ScrollAnimationFrame {
+  get: () => AnimationFrame
+  set: (callback: FrameRequestCallback) => void
+  cancel: () => void
+}
