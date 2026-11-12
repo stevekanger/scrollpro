@@ -1,38 +1,38 @@
 {
+  "type": "module",
   "name": "scrollpro",
-  "version": "0.0.30",
-  "description": "Smooth momentum scrolling and parallax library",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "keywords": [
-    "tween",
-    "scrollpro",
-    "smooth",
-    "scrolling",
-    "momentum",
-    "scrolling",
-    "parallax"
-  ],
-  "scripts": {
-    "test": "jest",
-    "clean": "tsc --build --clean",
-    "build": "tsc --project tsconfig.build.json -w",
-    "prepare": "tsc --project tsconfig.build.json"
-  },
+  "version": "0.1.0",
+  "description": "Javascript scrolling and parallax library.",
   "author": "Steve Kanger",
   "repository": "https://github.com/stevekanger/scrollpro.git",
   "homepage": "https://github.com/stevekanger/scrollpro#readme",
   "license": "MIT",
   "private": false,
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "tween",
+    "scrollpro",
+    "scrolling",
+    "scrolling",
+    "parallax"
+  ],
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "tsdown",
+    "prepare": "npm run build",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
   "devDependencies": {
-    "@types/jest": "^29.5.0",
-    "jest": "^29.5.0",
-    "jest-environment-jsdom": "^29.5.0",
-    "ts-jest": "^29.1.0",
-    "typescript": "^4.6.2"
+    "tsdown": "^0.23.5",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
   }
 }

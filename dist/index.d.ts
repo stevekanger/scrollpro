@@ -1,16 +1,36 @@
-export * from './types';
-export { default as Controller } from './Controller';
-export { default as Viewport } from './Viewport';
-export { default as Content } from './Content';
-export { default as Scrollbar } from './Scrollbar';
-export { default as Observer } from './Observer';
-export { default as Sticky } from './Sticky';
-export { default as applyClasses } from './utils/applyClasses';
-export { default as applyListeners } from './utils/applyListeners';
-export { default as applyTween } from './utils/applyTween';
-export { default as getBounds } from './utils/getBounds';
-export { default as getComputedStyle } from './utils/getComputedStyle';
-export { default as getOffsetTop } from './utils/getOffsetTop';
-export { default as getProgress } from './utils/getProgress';
-export { default as isElement } from './utils/isElement';
-export { default } from './Controller';
+type SetStoreAction<T> = ((store: T) => Partial<T>) | Partial<T>;
+interface Store<T> {
+  get: () => T;
+  set: (action: SetStoreAction<T>) => void;
+  setVal: <K extends keyof T>(key: K, val: T[K]) => void;
+}
+type EventListener<Data> = (data: Data) => void;
+interface EventListeners<EventsData> {
+  on: <K extends keyof EventsData>(e: K, listener: EventListener<EventsData[K]>) => void;
+  off: <K extends keyof EventsData>(e: K, listener: EventListener<EventsData[K]>) => void;
+  fire: <K extends keyof EventsData>(e: K, data: EventsData[K]) => void;
+}
+interface ScrollStore {
+  x: number;
+  y: number;
+  deltaX: number;
+  deltaY: number;
+  limitX: number;
+  limitY: number;
+  progressX: number;
+  progressY: number;
+}
+interface ScrollEventsData {
+  update: ScrollStore;
+}
+interface Scroll {
+  get: Store<ScrollStore>['get'];
+  set: Store<ScrollStore>['set'];
+  setVal: Store<ScrollStore>['setVal'];
+  on: EventListeners<ScrollEventsData>['on'];
+  off: EventListeners<ScrollEventsData>['off'];
+  fire: EventListeners<ScrollEventsData>['fire'];
+}
+declare function createScroll(): Scroll;
+declare function createObserver(el: HTMLElement): void;
+export { createObserver, createScroll };

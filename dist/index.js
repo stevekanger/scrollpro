@@ -1,51 +1,98 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = exports.isElement = exports.getProgress = exports.getOffsetTop = exports.getComputedStyle = exports.getBounds = exports.applyTween = exports.applyListeners = exports.applyClasses = exports.Sticky = exports.Observer = exports.Scrollbar = exports.Content = exports.Viewport = exports.Controller = void 0;
-__exportStar(require("./types"), exports);
-var Controller_1 = require("./Controller");
-Object.defineProperty(exports, "Controller", { enumerable: true, get: function () { return __importDefault(Controller_1).default; } });
-var Viewport_1 = require("./Viewport");
-Object.defineProperty(exports, "Viewport", { enumerable: true, get: function () { return __importDefault(Viewport_1).default; } });
-var Content_1 = require("./Content");
-Object.defineProperty(exports, "Content", { enumerable: true, get: function () { return __importDefault(Content_1).default; } });
-var Scrollbar_1 = require("./Scrollbar");
-Object.defineProperty(exports, "Scrollbar", { enumerable: true, get: function () { return __importDefault(Scrollbar_1).default; } });
-var Observer_1 = require("./Observer");
-Object.defineProperty(exports, "Observer", { enumerable: true, get: function () { return __importDefault(Observer_1).default; } });
-var Sticky_1 = require("./Sticky");
-Object.defineProperty(exports, "Sticky", { enumerable: true, get: function () { return __importDefault(Sticky_1).default; } });
-var applyClasses_1 = require("./utils/applyClasses");
-Object.defineProperty(exports, "applyClasses", { enumerable: true, get: function () { return __importDefault(applyClasses_1).default; } });
-var applyListeners_1 = require("./utils/applyListeners");
-Object.defineProperty(exports, "applyListeners", { enumerable: true, get: function () { return __importDefault(applyListeners_1).default; } });
-var applyTween_1 = require("./utils/applyTween");
-Object.defineProperty(exports, "applyTween", { enumerable: true, get: function () { return __importDefault(applyTween_1).default; } });
-var getBounds_1 = require("./utils/getBounds");
-Object.defineProperty(exports, "getBounds", { enumerable: true, get: function () { return __importDefault(getBounds_1).default; } });
-var getComputedStyle_1 = require("./utils/getComputedStyle");
-Object.defineProperty(exports, "getComputedStyle", { enumerable: true, get: function () { return __importDefault(getComputedStyle_1).default; } });
-var getOffsetTop_1 = require("./utils/getOffsetTop");
-Object.defineProperty(exports, "getOffsetTop", { enumerable: true, get: function () { return __importDefault(getOffsetTop_1).default; } });
-var getProgress_1 = require("./utils/getProgress");
-Object.defineProperty(exports, "getProgress", { enumerable: true, get: function () { return __importDefault(getProgress_1).default; } });
-var isElement_1 = require("./utils/isElement");
-Object.defineProperty(exports, "isElement", { enumerable: true, get: function () { return __importDefault(isElement_1).default; } });
-var Controller_2 = require("./Controller");
-Object.defineProperty(exports, "default", { enumerable: true, get: function () { return __importDefault(Controller_2).default; } });
+// src/utils/createListeners.ts
+/**
+* Creates the event listeners.
+*
+* @param events - The listener events
+*
+* @typeParam EventsData - A map of the event keys and that events emit data
+*/
+function createListeners(events) {
+	function on(event, listener) {
+		events[event].add(listener);
+	}
+	function off(event, listener) {
+		events[event].delete(listener);
+	}
+	function fire(event, data) {
+		events[event].forEach((listener) => listener(data));
+	}
+	return {
+		on,
+		off,
+		fire
+	};
+}
+// src/utils/createStore.ts
+/**
+* Creates a data store
+*
+* @param initialState - An object with the initial store state
+*/
+function createStore(initialState) {
+	let state = initialState;
+	/**
+	* Gets the store value
+	*/
+	function get() {
+		return state;
+	}
+	/**
+	* Sets the entire store
+	*
+	* @param action - Either a partial of the store or a function that returns a partial of the store
+	*/
+	function set(action) {
+		const partial = typeof action === "function" ? action(state) : action;
+		state = {
+			...state,
+			...partial
+		};
+	}
+	/**
+	* Sets a single store value
+	*
+	* @param key - The store key to set
+	* @param val - The store value to set
+	*/
+	function setVal(key, val) {
+		state[key] = val;
+	}
+	return {
+		get,
+		set,
+		setVal
+	};
+}
+// src/scroll/createScroll.ts
+function createScroll() {
+	const scrollStore = createStore({
+		x: 0,
+		y: 0,
+		deltaX: 0,
+		deltaY: 0,
+		limitX: 0,
+		limitY: 0,
+		progressX: 0,
+		progressY: 0
+	});
+	const listeners = createListeners({ update: /* @__PURE__ */ new Set() });
+	function set(action) {
+		scrollStore.set(action);
+		listeners.fire("update", scrollStore.get());
+	}
+	function setVal(key, val) {
+		scrollStore.setVal(key, val);
+		listeners.fire("update", scrollStore.get());
+	}
+	return {
+		set,
+		setVal,
+		get: scrollStore.get,
+		on: listeners.on,
+		off: listeners.off,
+		fire: listeners.fire
+	};
+}
+// src/observer/createObserver.ts
+function createObserver(el) {}
+export { createObserver, createScroll };
