@@ -1,17 +1,20 @@
 import type { AnimationFrame, AF } from './types'
 
+/**
+ * Creates an animation frame interface.
+ */
 export default function createAnimationFrame(): AnimationFrame {
   let current: AF = null
 
   /**
-   * Gets the current animationFrame
+   * Gets the current animationFrame.
    */
   function get() {
     return current
   }
 
   /**
-   * Sets the animation frame. If one exists it automatically cancels it.
+   * Sets the animation frame. If one exists it automatically cancels and replaces it.
    *
    * @param callback - The animationFrame callback function
    */
@@ -24,7 +27,7 @@ export default function createAnimationFrame(): AnimationFrame {
   }
 
   /**
-   * Cancels the animationFrame and sets to null
+   * Cancels the animationFrame and sets to null.
    */
   function cancel() {
     if (current) {

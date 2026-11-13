@@ -8,7 +8,6 @@ import type {
   ScrollOptions,
 } from './types'
 
-// Default options for the scroll
 const defaultOptions = {
   ease: 0.1,
 }
