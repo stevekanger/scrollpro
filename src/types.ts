@@ -1,10 +1,10 @@
-export type SetStoreAction<T> = ((store: T) => Partial<T>) | Partial<T>
+export type SetStoreActionFunction<T> = (store: T) => T
 
-export interface Store<T> {
-  get: () => T
-  set: (action: SetStoreAction<T>) => void
-  setVal: <K extends keyof T>(key: K, val: T[K]) => void
-}
+export type SetStoreAction<T> = SetStoreActionFunction<Partial<T>> | Partial<T>
+
+export type Store<T> = [T, (action: SetStoreAction<T>) => void]
+
+export type AccessStore<T> = () => Store<T>
 
 export type EventListener<Data> = (data: Data) => void
 

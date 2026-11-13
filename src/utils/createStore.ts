@@ -1,4 +1,9 @@
-import type { Store, SetStoreAction } from '../types'
+import type {
+  SetStoreAction,
+  AccessStore,
+  SetStoreActionFunction,
+  Store,
+} from '../types'
 
 /**
  * Creates a data store
@@ -7,43 +12,27 @@ import type { Store, SetStoreAction } from '../types'
  */
 export default function createStore<T extends object>(
   initialState: T
-): Store<T> {
-  let state = initialState
+): AccessStore<T> {
+  const store: [T, typeof set] = [{ ...initialState }, set]
 
   /**
-   * Gets the store value
-   */
-  function get(): T {
-    return state
-  }
-
-  /**
-   * Sets the entire store
+   * Sets properties to the store
    *
    * @param action - Either a partial of the store or a function that returns a partial of the store
    */
   function set(action: SetStoreAction<T>): void {
-    const partial = typeof action === 'function' ? action(state) : action
+    const partial =
+      typeof action === 'function'
+        ? (action as SetStoreActionFunction<T>)(store[0])
+        : action
 
-    state = {
-      ...state,
-      ...partial,
-    }
+    Object.assign(store[0], partial)
   }
 
   /**
-   * Sets a single store value
-   *
-   * @param key - The store key to set
-   * @param val - The store value to set
+   * Function that r
    */
-  function setVal<K extends keyof T>(key: K, val: T[K]) {
-    state[key] = val
-  }
-
-  return {
-    get,
-    set,
-    setVal,
+  return function accessStore(): Store<T> {
+    return store
   }
 }

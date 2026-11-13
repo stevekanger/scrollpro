@@ -1,7 +1,7 @@
-import type { Store } from '@/types'
+import type { AccessStore } from '@/types'
 import type { EventListeners } from '@/types'
 
-export interface ScrollStore {
+export interface ScrollState {
   x: number
   y: number
   deltaX: number
@@ -13,21 +13,24 @@ export interface ScrollStore {
 }
 
 export interface ScrollEventsData {
-  update: ScrollStore
+  update: ScrollState
+}
+
+export interface ScrollOptions {
+  ease: number
 }
 
 export interface Scroll {
-  get: Store<ScrollStore>['get']
-  set: Store<ScrollStore>['set']
-  setVal: Store<ScrollStore>['setVal']
-  on: EventListeners<ScrollEventsData>['on']
-  off: EventListeners<ScrollEventsData>['off']
+  af: AnimationFrame
+  listeners: EventListeners<ScrollEventsData>
+  accessScrollState: AccessStore<ScrollState>
+  accessScrollOptions: AccessStore<ScrollOptions>
 }
 
-export type AnimationFrame = ReturnType<typeof requestAnimationFrame> | null
+export type AF = ReturnType<typeof requestAnimationFrame> | null
 
-export interface ScrollAnimationFrame {
-  get: () => AnimationFrame
-  set: (callback: FrameRequestCallback) => void
+export interface AnimationFrame {
+  get: () => AF
+  request: (callback: FrameRequestCallback) => void
   cancel: () => void
 }
