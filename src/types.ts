@@ -23,3 +23,14 @@ export interface EventListeners<EventsData> {
   ) => void
   dispatch: <K extends keyof EventsData>(e: K, data: EventsData[K]) => void
 }
+
+export interface ElementBounds {
+  top: number
+  bottom: number
+  left: number
+  right: number
+  width: number
+  height: number
+}
+
+export type Viewport = HTMLElement | Window

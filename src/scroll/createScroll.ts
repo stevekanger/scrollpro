@@ -6,19 +6,21 @@ import type {
   Scroll,
   ScrollEventsData,
   ScrollOptions,
+  ScrollState,
 } from './types'
 
 const defaultOptions = {
-  ease: 0.1,
+  initialX: window.scrollX,
+  initialY: window.scrollY,
 }
 
 /**
  * Creates the scroll
  *
- * @param initialOptions - The user defined scroll options that will be merged with defaults
+ * @param options - Scroll options that will be merged with defaults
  */
 export default function createScroll(
-  initialOptions: Partial<ScrollOptions> = {}
+  options: Partial<ScrollOptions> = {}
 ): Scroll {
   let af: AnimationFrame = createAnimationFrame()
 
@@ -26,20 +28,22 @@ export default function createScroll(
     update: new Set(),
   })
 
-  const accessScrollState = createStore({
-    x: 0,
-    y: 0,
-    deltaX: 0,
-    deltaY: 0,
+  const accessScrollOptions = createStore<ScrollOptions>({
+    ...defaultOptions,
+    ...options,
+  })
+
+  const [{ initialX, initialY }] = accessScrollOptions()
+
+  const accessScrollState = createStore<ScrollState>({
+    x: initialX,
+    y: initialY,
+    deltaX: initialX,
+    deltaY: initialY,
     limitX: Infinity,
     limitY: Infinity,
     progressX: 0,
     progressY: 0,
-  })
-
-  const accessScrollOptions = createStore({
-    ...defaultOptions,
-    ...initialOptions,
   })
 
   return {

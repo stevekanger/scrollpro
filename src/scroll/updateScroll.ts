@@ -20,7 +20,7 @@ export function lerp(start: number, end: number, ease: number) {
  * @param ease - The ease value
  * @param callback - The callback to run after the frame
  */
-export function animateScrollToDeltas(
+export function easeScrollToDeltas(
   state: ScrollState,
   af: AnimationFrame,
   ease: number,
@@ -41,7 +41,7 @@ export function animateScrollToDeltas(
     state.progressX = getProgress(0, limitX, lerpedX)
     state.progressY = getProgress(0, limitY, lerpedY)
 
-    af.request(() => animateScrollToDeltas(state, af, ease, callback))
+    af.request(() => easeScrollToDeltas(state, af, ease, callback))
   } else {
     af.cancel()
 
@@ -61,27 +61,26 @@ export function animateScrollToDeltas(
  * @param scroll - The scroll
  * @param x - The x scroll value
  * @param y - The y scroll value
- * @param [animate=true] - Whether or not to animate the scroll
+ * @param [ease=true] - Whether or not to ease the scroll x,y values to deltas
  */
 export default function updateScroll(
   scroll: Scroll,
   x: number,
   y: number,
-  animate: boolean = true
+  ease: number | null = null
 ): void {
-  const { af, accessScrollState, accessScrollOptions, listeners } = scroll
-  const [{ ease }] = accessScrollOptions()
+  const { af, accessScrollState, listeners } = scroll
   const [state] = accessScrollState()
 
   af.cancel()
 
-  if (animate) {
+  if (ease !== null) {
     // Must mutate state directly here for performance reasons
     state.deltaX = Math.min(state.limitX, Math.max(0, x))
     state.deltaY = Math.min(state.limitY, Math.max(0, y))
 
     af.request(() =>
-      animateScrollToDeltas(state, af, ease, function() {
+      easeScrollToDeltas(state, af, ease, function() {
         listeners.dispatch('update', state)
       })
     )

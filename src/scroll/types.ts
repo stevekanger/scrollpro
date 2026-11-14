@@ -17,7 +17,8 @@ export interface ScrollEventsData {
 }
 
 export interface ScrollOptions {
-  ease: number
+  initialX: number
+  initialY: number
 }
 
 export interface Scroll {
