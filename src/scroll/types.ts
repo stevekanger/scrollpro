@@ -1,4 +1,3 @@
-import type { AccessStore } from '@/types'
 import type { EventListeners } from '@/types'
 
 export interface ScrollState {
@@ -24,8 +23,8 @@ export interface ScrollOptions {
 export interface Scroll {
   af: AnimationFrame
   listeners: EventListeners<ScrollEventsData>
-  accessScrollState: AccessStore<ScrollState>
-  accessScrollOptions: AccessStore<ScrollOptions>
+  options: ScrollOptions
+  state: ScrollState
 }
 
 export type AF = ReturnType<typeof requestAnimationFrame> | null

@@ -34,3 +34,5 @@ export interface ElementBounds {
 }
 
 export type Viewport = HTMLElement | Window
+
+export type ResolvableOption<T> = T | (() => T)

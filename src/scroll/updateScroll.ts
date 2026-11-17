@@ -69,8 +69,7 @@ export default function updateScroll(
   y: number,
   ease: number | null = null
 ): void {
-  const { af, accessScrollState, listeners } = scroll
-  const [state] = accessScrollState()
+  const { af, state, listeners } = scroll
 
   af.cancel()
 
@@ -80,7 +79,7 @@ export default function updateScroll(
     state.deltaY = Math.min(state.limitY, Math.max(0, y))
 
     af.request(() =>
-      easeScrollToDeltas(state, af, ease, function() {
+      easeScrollToDeltas(state, af, ease, function () {
         listeners.dispatch('update', state)
       })
     )

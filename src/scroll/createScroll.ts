@@ -1,5 +1,4 @@
 import createListeners from '@/utils/createListeners'
-import createStore from '@/utils/createStore'
 import createAnimationFrame from './createAnimationFrame'
 import type {
   AnimationFrame,
@@ -20,7 +19,7 @@ const defaultOptions = {
  * @param options - Scroll options that will be merged with defaults
  */
 export default function createScroll(
-  options: Partial<ScrollOptions> = {}
+  initialOptions: Partial<ScrollOptions> = {}
 ): Scroll {
   let af: AnimationFrame = createAnimationFrame()
 
@@ -28,14 +27,14 @@ export default function createScroll(
     update: new Set(),
   })
 
-  const accessScrollOptions = createStore<ScrollOptions>({
+  const options: ScrollOptions = {
     ...defaultOptions,
-    ...options,
-  })
+    ...initialOptions,
+  }
 
-  const [{ initialX, initialY }] = accessScrollOptions()
+  const { initialX, initialY } = options
 
-  const accessScrollState = createStore<ScrollState>({
+  const state: ScrollState = {
     x: initialX,
     y: initialY,
     deltaX: initialX,
@@ -44,12 +43,14 @@ export default function createScroll(
     limitY: Infinity,
     progressX: 0,
     progressY: 0,
-  })
+  }
 
-  return {
+  const scroll = {
     af,
     listeners,
-    accessScrollState,
-    accessScrollOptions,
+    options,
+    state,
   }
+
+  return scroll
 }
