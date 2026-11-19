@@ -1,10 +1,10 @@
-import type { ResolvableOption, Viewport } from '@/types'
-import getElementBounds from '@/utils/getElementBounds'
-import getViewportBounds from '@/utils/getViewportBounds'
-import type { Observer, ObserverOptions, ObserverState } from './types'
-import getProgress from '@/utils/getProgress'
-import resolveOption from '@/utils/resolveOption'
 import type { Scroll } from '@/scroll/types'
+import type { ElementBounds, ResolvableOption, Viewport } from '@/types'
+import getElementBounds from '@/utils/getElementBounds'
+import getProgress from '@/utils/getProgress'
+import getViewportBounds from '@/utils/getViewportBounds'
+import resolveOption from '@/utils/resolveOption'
+import type { Observer, ObserverOptions, ObserverState } from './types'
 
 const defaultOptions = {
   viewport: window,
@@ -14,18 +14,16 @@ const defaultOptions = {
 }
 
 /**
- * Whether the element is in view when the scroll position is 0
+ * Whether the start of an element is in view when the scroll position is 0
  *
- * @param elTop - The elements top position
- * @param viewportTop - The viewports top position
- * @param viewportHeight - The viewports height
+ * @param elBounds - The elements bounds
+ * @param viewportBounds - The viewports bounds
  */
-function inInitialView(
-  elTop: number,
-  viewportTop: number,
-  viewportHeight: number
+function startInInitialView(
+  elBounds: ElementBounds,
+  viewportBounds: ElementBounds
 ): boolean {
-  if (elTop < window.innerHeight) {
+  if (elBounds.top < window.innerHeight) {
     return true
   }
 
@@ -35,57 +33,51 @@ function inInitialView(
 /**
  * Gets the observer starting pos when the element first passes into view
  *
- * @param elTop - The elements top position
- * @param elHeight - The elements height
- * @param viewportTop - The viewports top position
- * @param viewportHeight - The viewports height
+ * @param elBounds - The elements bounds
+ * @param viewportBounds - The viewports bounds
  * @param scrollY - The current scrollY position
  * @param offsetStart - The resolved offsetStart option
  */
 export function getObserverStart(
-  elTop: number,
-  elHeight: number,
-  viewportTop: number,
-  viewportHeight: number,
+  elBounds: ElementBounds,
+  viewportBounds: ElementBounds,
   scrollY: number,
   offsetStart: number
 ): number {
-  if (inInitialView(elTop, viewportTop, viewportHeight)) {
-    return 0
-  }
-
-  return elTop + scrollY - viewportHeight + offsetStart
+  return Math.max(
+    0,
+    elBounds.top + scrollY - viewportBounds.height + offsetStart
+  )
 }
 
 /**
  * Gets the observer ending pos when the element is completely out of view
  *
  * @param start - The starting pos
- * @param elTop - The elements top position
- * @param elHeight - The elements height
- * @param viewportTop - The viewports top position
- * @param viewportHeight - The viewports height
+ * @param elBounds - The elements bounds
+ * @param viewportBounds - The viewports bounds
  * @param scrollY - The current scrollY position
  * @param offsetStart - The resolved offsetStart option
  * @param offsetEnd - The resolved offsetEnd option
  */
 export function getObserverEnd(
   start: number,
-  elTop: number,
-  elHeight: number,
-  viewportTop: number,
-  viewportHeight: number,
+  elBounds: ElementBounds,
+  viewportBounds: ElementBounds,
   scrollY: number,
   offsetStart: number,
   offsetEnd: number
 ): number {
-  const normalizedStart = inInitialView(elTop, viewportTop, scrollY)
-    ? start - elTop
+  const normalizedStart = startInInitialView(elBounds, viewportBounds)
+    ? elBounds.top + scrollY - viewportBounds.height + offsetStart
     : start
 
   return Math.max(
     0,
-    normalizedStart + viewportHeight + elHeight - (offsetStart + offsetEnd)
+    normalizedStart +
+    elBounds.height +
+    viewportBounds.height -
+    (offsetStart + offsetEnd)
   )
 }
 
@@ -109,27 +101,12 @@ export function getObserverBoundaries(
   offsetEnd = resolveOption(offsetEnd)
   const elBounds = getElementBounds(el)
   const viewportBounds = getViewportBounds(viewport)
-  // const start = elBounds.top + scrollY - viewportBounds.height + offsetStart
-  const start = getObserverStart(
-    elBounds.top,
-    elBounds.height,
-    viewportBounds.top,
-    viewportBounds.height,
-    scrollY,
-    offsetStart
-  )
-
-  // const end = Math.max(
-  //   0,
-  //   start + viewportBounds.height + elBounds.height - (offsetStart + offsetEnd)
-  // )
+  const start = getObserverStart(elBounds, viewportBounds, scrollY, offsetStart)
 
   const end = getObserverEnd(
     start,
-    elBounds.top,
-    elBounds.height,
-    viewportBounds.top,
-    viewportBounds.height,
+    elBounds,
+    viewportBounds,
     scrollY,
     offsetStart,
     offsetEnd
